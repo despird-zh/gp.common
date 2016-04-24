@@ -129,6 +129,14 @@ public class InfoId <K> implements Serializable{
 		}else if(id.getId() == null ){	
 			
 			return false;
+		}else if(id.getId() == GeneralConstants.LOCAL_INSTANCE ||
+				id.getId() == GeneralConstants.PERSON_WORKGROUP ||
+				id.getId() == GeneralConstants.ORGHIER_WORKGROUP ||
+				id.getId() == GeneralConstants.ORGHIER_ROOT ||
+				id.getId() == GeneralConstants.FOLDER_ROOT ){
+			
+			return true;
+			
 		}else if( id.getId() instanceof Integer && (int)(id.getId()) < 1){
 			
 			return false;
