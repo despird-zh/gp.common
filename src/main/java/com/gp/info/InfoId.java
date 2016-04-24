@@ -2,6 +2,7 @@ package com.gp.info;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 
 import com.gp.common.GeneralConstants;
@@ -129,11 +130,12 @@ public class InfoId <K> implements Serializable{
 		}else if(id.getId() == null ){	
 			
 			return false;
-		}else if(id.getId() == GeneralConstants.LOCAL_INSTANCE ||
-				id.getId() == GeneralConstants.PERSON_WORKGROUP ||
-				id.getId() == GeneralConstants.ORGHIER_WORKGROUP ||
-				id.getId() == GeneralConstants.ORGHIER_ROOT ||
-				id.getId() == GeneralConstants.FOLDER_ROOT ){
+			
+		}else if(ObjectUtils.equals(id.getId(), GeneralConstants.LOCAL_INSTANCE )||
+				ObjectUtils.equals(id.getId(), GeneralConstants.PERSON_WORKGROUP) ||
+				ObjectUtils.equals(id.getId(), GeneralConstants.ORGHIER_WORKGROUP) ||
+				ObjectUtils.equals(id.getId(), GeneralConstants.ORGHIER_ROOT) ||
+				ObjectUtils.equals(id.getId(), GeneralConstants.FOLDER_ROOT) ){
 			
 			return true;
 			
