@@ -22,7 +22,7 @@ package com.gp.util;
 
 import java.io.UnsupportedEncodingException;
 
-final class Base64 {
+public final class Base64 {
 	
 	private Base64() {
 		

@@ -66,6 +66,7 @@ public class ImageUtils {
 		 BufferedImage copyOfImage = new BufferedImage(dest.getWidth(), dest.getHeight(), BufferedImage.TYPE_INT_RGB);
 		 Graphics2D g = copyOfImage.createGraphics();
 		 g.drawImage(dest, 0, 0, null);
+		 g.dispose();
 		 return copyOfImage; //or use it however you want
 	}
 	
@@ -101,7 +102,7 @@ public class ImageUtils {
 			AffineTransform at = AffineTransform.getScaleInstance((double) width / bufsrc.getWidth(),
 					(double) height / bufsrc.getHeight());
 			g.drawRenderedImage(bufsrc, at);
-
+			g.dispose();
 			return bufdest;
 		} catch (Exception e) {
 			LOGGER.error("error resize the image.", e);
