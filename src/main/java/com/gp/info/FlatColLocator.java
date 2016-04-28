@@ -13,12 +13,12 @@ public interface FlatColLocator {
 	/**
 	 * Get the index of column 
 	 **/
-	public int getColumnIndex();
+	public int getColIndex();
 	
 	/**
 	 * Get the prefix of column 
 	 **/
-	public String getColumnPrefix();
+	public String getColPrefix();
 	
 	/**
 	 * Get the column name 
