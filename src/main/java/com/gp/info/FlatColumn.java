@@ -14,15 +14,15 @@ public class FlatColumn implements FlatColLocator{
 
 	private String prefix ;
 	
-	private int index;
+	private Integer index = null;
 	
-	public FlatColumn(String prefix, int index){
+	public FlatColumn(String prefix, Integer index){
 		this.prefix = prefix;
 		this.index = index;
 	}
 	
 	@Override
-	public int getColIndex() {
+	public Integer getColIndex() {
 		
 		return index;
 	}

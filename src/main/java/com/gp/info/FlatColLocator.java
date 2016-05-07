@@ -13,7 +13,7 @@ public interface FlatColLocator {
 	/**
 	 * Get the index of column 
 	 **/
-	public int getColIndex();
+	public Integer getColIndex();
 	
 	/**
 	 * Get the prefix of column 
