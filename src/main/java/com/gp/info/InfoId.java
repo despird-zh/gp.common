@@ -23,6 +23,9 @@ public class InfoId <K> implements Serializable{
 	/** table alias */
 	private String idKey;
 	
+	/** the id column*/
+	private String idColumn = "id";
+	
 	/** record id */
 	private K id;
 	
@@ -34,6 +37,18 @@ public class InfoId <K> implements Serializable{
 		this.id = id;
 	}
 	
+	/**
+	 * constructor with table name, id column and id value
+	 **/
+	public InfoId(String idKey,String idColumn, K id){
+		this.idKey = idKey;
+		this.idColumn = idColumn;
+		this.id = id;
+	}
+	
+	/**
+	 * constructor with Identifier and id 
+	 **/
 	public InfoId(Identifier idKey, K id){
 		this.idKey = idKey.getSchema();
 		this.id = id;
@@ -149,4 +164,9 @@ public class InfoId <K> implements Serializable{
 		
 		return true;
 	}
+
+	public String getIdColumn() {
+		return idColumn;
+	}
+
 }
