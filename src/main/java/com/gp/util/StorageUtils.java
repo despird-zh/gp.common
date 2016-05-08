@@ -119,16 +119,16 @@ public class StorageUtils {
 	 * @param binaryId the id of binary record
 	 * @return String uri string 
 	 **/
-	public static String toURIStr(InfoId<Long> storageKey, long binaryId){
+	public static String toURIStr(InfoId<Integer> storageId, long binaryId){
 
-		return toURIStr(storageKey, binaryId, StringUtils.EMPTY, StringUtils.EMPTY);
+		return toURIStr(storageId, binaryId, StringUtils.EMPTY, StringUtils.EMPTY);
 	}
 	
-	public static String toURIStr(InfoId<Long> storageKey, long binaryId, String prefix, String postfix){
+	public static String toURIStr(InfoId<Integer> storageId, long binaryId, String prefix, String postfix){
 		
 		StringBuffer buf = new StringBuffer();
 		buf.append(GeneralConstants.GP_SCHEME).append("://")
-			.append(storageKey.toString())
+			.append(storageId.toString())
 			.append(toPathKey(binaryId,prefix, postfix));
 		
 		return buf.toString();
@@ -142,11 +142,11 @@ public class StorageUtils {
 	 * @param pathKey the key of path
 	 * @return String uri string 
 	 **/
-	public static String toURIStr(InfoId<Long> storageKey, String pathKey){
+	public static String toURIStr(InfoId<Integer> storageId, String pathKey){
 		
 		StringBuffer buf = new StringBuffer();
 		buf.append(GeneralConstants.GP_SCHEME).append("://")
-			.append(storageKey.toString())
+			.append(storageId.toString())
 			.append(pathKey);
 		
 		return buf.toString();

@@ -8,7 +8,7 @@ import com.gp.util.StorageUtils;
 
 import junit.framework.TestCase;
 
-public class IdTest extends TestCase{
+public class BinaryStoreIdTest extends TestCase{
 	
 	public void test1()throws Exception{
 		
@@ -33,21 +33,21 @@ public class IdTest extends TestCase{
 		String pak1 = StorageUtils.toPureKey(367);
 		System.out.println("purekey:" + pak1);
 		
-		String u1 = StorageUtils.toURIStr(new InfoId<Long>("storage",123l), pak);
+		String u1 = StorageUtils.toURIStr(new InfoId<Integer>("storage",123), pak);
 		System.out.println(u1);
 		URI u = new URI(u1);
 		System.out.println(u.getScheme());
 		System.out.println(u.getPort());
 		System.out.println(u.getPath());
 		
-		u1 = StorageUtils.toURIStr(new InfoId<Long>("storeage",123l), 21l);
+		u1 = StorageUtils.toURIStr(new InfoId<Integer>("storeage",123), 21l);
 		System.out.println(u1);
 		u = new URI(u1);
 		System.out.println(u.getScheme());
 		System.out.println(u.getPort());
 		System.out.println(u.getPath());
 		
-		u1 = StorageUtils.toURIStr(new InfoId<Long>("storeage",123l), 1123l);
+		u1 = StorageUtils.toURIStr(new InfoId<Integer>("storeage",123), 1123l);
 		System.out.println(u1);
 		u = new URI(u1);
 		System.out.println(u.getScheme());
