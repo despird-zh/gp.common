@@ -4,7 +4,8 @@ import com.gp.exception.PoolException;
 
 public interface BasePool<T> {
 
-    T borrowItem() throws PoolException, InterruptedException;
-    void returnItem(T item);
+    T acquire() throws PoolException, InterruptedException;
+    
+    void release(T item);
 
 }

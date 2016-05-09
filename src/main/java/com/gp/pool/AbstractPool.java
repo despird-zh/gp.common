@@ -75,7 +75,7 @@ public abstract class AbstractPool<T> implements BasePool<T> {
     }
 
     @Override
-    public void returnItem(T item) {
+    public void release(T item) {
         if (item == null) {
             return;
         }
@@ -83,7 +83,7 @@ public abstract class AbstractPool<T> implements BasePool<T> {
     }
 
     @Override
-    public T borrowItem() throws PoolException, InterruptedException {
+    public T acquire() throws PoolException, InterruptedException {
         T got = queue.poll();
 
         // regardless of other things, add a lazy instance if the current state

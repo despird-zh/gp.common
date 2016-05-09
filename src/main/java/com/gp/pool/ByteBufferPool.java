@@ -62,7 +62,7 @@ public class ByteBufferPool implements BasePool<ByteBuffer>{
         	queuemap.put(wrapper.bufferSize, wrapper);
         }
 		// allocate the ByteBuffer queue
-        lazyAppendQueue(queuemap.values().toArray(new BlockingQueueWrapper[queuemap.size()]));
+        lazyAppendQueue(queuemap.values().toArray(new BlockingQueueWrapper[0]));
 		// monitor the queue to keep only min idle available.
 		queueMonitor();
 	}
@@ -71,11 +71,11 @@ public class ByteBufferPool implements BasePool<ByteBuffer>{
 	 * handle in case of exhausted
 	 * 
 	 **/
-	protected ByteBuffer handleExhausted(int buffersize) throws PoolException {
+	protected ByteBuffer handleExhausted(BlockingQueueWrapper wrapper) throws PoolException {
 		if(LOGGER.isDebugEnabled())
-			LOGGER.debug("Create new byte buffer coz of exhaused, size = {}", buffersize);
+			LOGGER.debug("Create new byte buffer coz of exhaused, size = {}", wrapper.bufferSize);
 		
-		return supplier.get(buffersize);
+		return supplier.get(wrapper.bufferSize);
 	}	
 
 	/**
@@ -102,12 +102,12 @@ public class ByteBufferPool implements BasePool<ByteBuffer>{
 	/**
 	 * append queue with specified buffer size. 
 	 **/
-    private void appendQueue(BlockingQueue<ByteBuffer> queue, int count, int buffersize) {
+    private void appendQueue(BlockingQueue<ByteBuffer> queue, int minIdle, int buffersize) {
     	if(LOGGER.isDebugEnabled())
-    		LOGGER.debug("Append bytebuffer to blocking queue : count -> {} / buffersize -> {}", count, 
+    		LOGGER.debug("Append bytebuffer to blocking queue : count -> {} / buffersize -> {}", minIdle, 
     			CommonUtils.humanReadableByteCount(buffersize,false));
-    	
-    	for (int i = 0; i < count; i++) {
+    	int currsize = queue.size();
+    	for (; currsize < minIdle; currsize ++) {
         	
             if (!queue.offer(supplier.get(buffersize))) {
                 return;
@@ -116,7 +116,7 @@ public class ByteBufferPool implements BasePool<ByteBuffer>{
     }
 
     @Override
-    public void returnItem(ByteBuffer item) {
+    public void release(ByteBuffer item) {
     	
         if (item == null) {
             return;
@@ -134,7 +134,7 @@ public class ByteBufferPool implements BasePool<ByteBuffer>{
     /**
      * borrow item  
      **/
-    public ByteBuffer borrowItem(final int buffersize) throws PoolException, InterruptedException {
+    public ByteBuffer acquire(final int buffersize) throws PoolException, InterruptedException {
        
     	if(!isValidSize(buffersize))
     		throw new PoolException("the buffer size["+ buffersize+ "] is not valid");
@@ -167,7 +167,7 @@ public class ByteBufferPool implements BasePool<ByteBuffer>{
             return got;
         }
 
-        return handleExhausted(buffersize);
+        return handleExhausted(wrapper);
     }
     
     /**
@@ -254,9 +254,9 @@ public class ByteBufferPool implements BasePool<ByteBuffer>{
     }
 
 	@Override
-	public ByteBuffer borrowItem() throws PoolException, InterruptedException {
+	public ByteBuffer acquire() throws PoolException, InterruptedException {
 		
-		return borrowItem(defaultSize);
+		return acquire(defaultSize);
 	}
 
 	public int[][] getStatistics(){
