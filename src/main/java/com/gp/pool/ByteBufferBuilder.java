@@ -21,13 +21,8 @@ public class ByteBufferBuilder implements Supplier<ByteBuffer>{
 		
 		return ByteBuffer.allocate(defaultSize);
 	}
-	
-	public ByteBuffer get(int bufferSize) {
-		
-		return ByteBuffer.allocate(bufferSize);
-	}
-	
+
 	public void drop(ByteBuffer byteBuffer){
-		// ignore
+		//((sun.nio.ch.DirectBuffer) byteBuffer).cleaner().clean();
 	}
 }

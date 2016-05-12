@@ -14,9 +14,12 @@ public class StorageUtils {
 	/**
 	 * convert binary id (long) into file path pattern string
 	 * this method disperse the binary file to different path tree.<br>
-	 * e.g 367 -> /80/00/01/6f.367
-	 * 
+	 * e.g 367 -> /80/00/01/6f.367<br>
+	 *         -> d:/a/80/00/01/6f.367.doc
 	 * @param binaryId the id the binary record
+	 * @param prefix usually be the root location of storage
+	 * @param postfix the extension append to the path 
+	 * 
 	 * @return String the path key 
 	 * 
 	 **/
@@ -124,6 +127,10 @@ public class StorageUtils {
 		return toURIStr(storageId, binaryId, StringUtils.EMPTY, StringUtils.EMPTY);
 	}
 	
+	/**
+	 * Convert the storage id and binaryId and prefix and postfix
+	 * into the URI format string
+	 **/
 	public static String toURIStr(InfoId<Integer> storageId, long binaryId, String prefix, String postfix){
 		
 		StringBuffer buf = new StringBuffer();

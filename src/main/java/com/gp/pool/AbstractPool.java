@@ -28,7 +28,7 @@ public abstract class AbstractPool<T> implements BasePool<T> {
         this.supplier = supplier;
         this.minIdle = minIdle;
         this.maxIdle = maxIdle;
-        this.queue = new LinkedBlockingQueue<>(maxIdle);
+        this.queue = new LinkedBlockingQueue<T>(maxIdle);
         this.maxWait = maxWait;
 
         // Set up a feed of input values.
