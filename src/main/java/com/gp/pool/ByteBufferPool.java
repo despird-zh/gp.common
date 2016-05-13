@@ -35,7 +35,6 @@ public class ByteBufferPool extends AbstractPool<ByteBuffer>{
 		queueMonitor();
 	}
 	
-
     @Override
     public void release(ByteBuffer item) {
     
@@ -43,8 +42,7 @@ public class ByteBufferPool extends AbstractPool<ByteBuffer>{
         if(LOGGER.isDebugEnabled())
         	LOGGER.debug("Return bytebuffer(size = {}) to queue", CommonUtils.humanReadableByteCount(item.capacity()));
 
-        super.release(item);
-        
+        super.release(item);        
     }
     
     private void queueMonitor(){    	

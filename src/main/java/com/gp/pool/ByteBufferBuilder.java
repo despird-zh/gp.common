@@ -7,8 +7,15 @@ public class ByteBufferBuilder implements Supplier<ByteBuffer>{
 
 	private int defaultSize;
 	
+	private boolean directEnable = false;
+	
 	public ByteBufferBuilder(int defaultSize){
 		this.defaultSize = defaultSize;
+	}
+	
+	public ByteBufferBuilder(int defaultSize, boolean directEnable){
+		this.defaultSize = defaultSize;
+		this.directEnable = directEnable;
 	}
 	
 	public int getDefaultSize(){
@@ -19,10 +26,14 @@ public class ByteBufferBuilder implements Supplier<ByteBuffer>{
 	@Override
 	public ByteBuffer get() {
 		
-		return ByteBuffer.allocate(defaultSize);
+		if(this.directEnable)
+			return ByteBuffer.allocateDirect(defaultSize);
+		else
+			return ByteBuffer.allocate(defaultSize);
 	}
 
 	public void drop(ByteBuffer byteBuffer){
-		//((sun.nio.ch.DirectBuffer) byteBuffer).cleaner().clean();
+		if(this.directEnable)
+			((sun.nio.ch.DirectBuffer) byteBuffer).cleaner().clean();
 	}
 }

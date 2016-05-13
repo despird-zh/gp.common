@@ -25,6 +25,11 @@ public class BufferOutputStream extends OutputStream {
 		bbuf.put(bytes, off, len);
 	}
 
+	@Override
+	public void close(){
+		this.bbuf = null;
+	}
+	
 	/**
 	 * Write the current OutputStream with an InputStream.
 	 * 

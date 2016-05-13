@@ -15,6 +15,7 @@ public class BufferInputStream extends InputStream {
 		this.bbuf = buf;
 	}
 
+	@Override
 	public int read() throws IOException {
 		if (!bbuf.hasRemaining()) {
 			return -1;
@@ -22,6 +23,7 @@ public class BufferInputStream extends InputStream {
 		return bbuf.get() & 0xFF;
 	}
 
+	@Override
 	public int read(byte[] bytes, int off, int len) throws IOException {
 		if (!bbuf.hasRemaining()) {
 			return -1;
@@ -32,6 +34,10 @@ public class BufferInputStream extends InputStream {
 		return len;
 	}
 	
+	@Override
+	public void close(){
+		this.bbuf = null;
+	}
 	/**
 	 * Read the buffer bytes from this InputStream to the OutputStream
 	 * 
