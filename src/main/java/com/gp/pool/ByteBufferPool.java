@@ -41,7 +41,7 @@ public class ByteBufferPool extends AbstractPool<ByteBuffer>{
     
         item.clear();
         if(LOGGER.isDebugEnabled())
-        	LOGGER.debug("Return bytebuffer(size = {}) to blocking queue", CommonUtils.humanReadableByteCount(item.capacity()));
+        	LOGGER.debug("Return bytebuffer(size = {}) to queue", CommonUtils.humanReadableByteCount(item.capacity()));
 
         super.release(item);
         

@@ -26,8 +26,11 @@ public class BufferOutputStream extends OutputStream {
 	}
 
 	/**
-	 * write the output steam with a inputstream.
-	 *  
+	 * Write the current OutputStream with an InputStream.
+	 * 
+	 * @param from the input stream
+	 * 
+	 * @return long the length of written content.
 	 **/
 	public long writeFromStream(InputStream from) throws IOException {
 		byte[] buf = new byte[BUF_SIZE];

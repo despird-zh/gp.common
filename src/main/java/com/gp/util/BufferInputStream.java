@@ -33,14 +33,16 @@ public class BufferInputStream extends InputStream {
 	}
 	
 	/**
-	 * read the buffer bytes to output stream
-	 * @param to output stream
-	 *  
+	 * Read the buffer bytes from this InputStream to the OutputStream
+	 * 
+	 * @param to the target output stream
+	 * 
+	 * @return the length of read content.
 	 **/
-	public int readToStream(OutputStream to)throws IOException {
+	public long readToStream(OutputStream to)throws IOException {
 		
 	    byte[] buf = new byte[BUF_SIZE];
-	    int total = 0;
+	    long total = 0;
 	    while (true) {
 	      int r = read(buf);
 	      if (r == -1) {
