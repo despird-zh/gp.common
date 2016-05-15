@@ -23,16 +23,14 @@ public class StorageUtils {
 	 * @return String the path key 
 	 * 
 	 **/
-	public static String toPathKey(long binaryId, String prefix, String postfix){
+	public static String toPathKey(long binaryId, String postfix){
 		
 		byte[] tbytes = ByteUtils.toBytes(ID_OFFSET + binaryId);
 		
 		String hexStr = ByteString.of(tbytes).hex();
 		
 		StringBuffer buf = new StringBuffer();
-		if(StringUtils.isNotBlank(prefix))
-			buf.append(GeneralConstants.SLASH_SEPARATOR).append(prefix);
-		
+
 		buf.append(GeneralConstants.SLASH_SEPARATOR).append(hexStr.substring(8,10));
 		buf.append(GeneralConstants.SLASH_SEPARATOR).append(hexStr.substring(10,12));
 		buf.append(GeneralConstants.SLASH_SEPARATOR).append(hexStr.substring(12,14));
@@ -57,7 +55,7 @@ public class StorageUtils {
 	 **/
 	public static String toPathKey(long binaryId){
 				
-		return toPathKey(binaryId, StringUtils.EMPTY,StringUtils.EMPTY);
+		return toPathKey(binaryId, StringUtils.EMPTY);
 	}
 	
 	/**
@@ -70,7 +68,7 @@ public class StorageUtils {
 	 **/
 	public static String toPureKey(long binaryId){
 		
-		return toPureKey(binaryId, StringUtils.EMPTY,StringUtils.EMPTY);
+		return toPureKey(binaryId, StringUtils.EMPTY);
 	}
 	
 	/**
@@ -81,15 +79,14 @@ public class StorageUtils {
 	 * @return String the path key 
 	 * 
 	 **/
-	public static String toPureKey(long binaryId, String prefix,String postfix){
+	public static String toPureKey(long binaryId, String postfix){
 		
 		byte[] tbytes = ByteUtils.toBytes(ID_OFFSET + binaryId);
 		
 		String hexStr = ByteString.of(tbytes).hex();
 		
 		StringBuffer buf = new StringBuffer();
-		if(StringUtils.isNotBlank(prefix))
-			buf.append(prefix);
+		
 		buf.append(hexStr.substring(8));
 		
 		buf.append(GeneralConstants.NAMES_SEPARATOR).append(binaryId);
@@ -124,19 +121,19 @@ public class StorageUtils {
 	 **/
 	public static String toURIStr(InfoId<Integer> storageId, long binaryId){
 
-		return toURIStr(storageId, binaryId, StringUtils.EMPTY, StringUtils.EMPTY);
+		return toURIStr(storageId, binaryId, StringUtils.EMPTY);
 	}
 	
 	/**
 	 * Convert the storage id and binaryId and prefix and postfix
 	 * into the URI format string
 	 **/
-	public static String toURIStr(InfoId<Integer> storageId, long binaryId, String prefix, String postfix){
+	public static String toURIStr(InfoId<Integer> storageId, long binaryId, String postfix){
 		
 		StringBuffer buf = new StringBuffer();
 		buf.append(GeneralConstants.GP_SCHEME).append("://")
 			.append(storageId.toString())
-			.append(toPathKey(binaryId,prefix, postfix));
+			.append(toPathKey(binaryId, postfix));
 		
 		return buf.toString();
 	}
