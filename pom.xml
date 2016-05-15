@@ -10,6 +10,7 @@
 		<jdk.home>C:\Program Files\Java\jdk1.8.0_65</jdk.home>
 		<slf4j.version>1.7.19</slf4j.version>
 		<log4j.version>2.5</log4j.version>
+		<guava.version>18.0</guava.version>
 		<comm.config>1.10</comm.config>
 		<disruptor.version>3.3.2</disruptor.version>
 		<zk.version>3.4.6</zk.version>
@@ -96,7 +97,7 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>11.0</version>
+			<version>${guava.version}</version>
 		</dependency>
 
 	</dependencies>
