@@ -11,6 +11,8 @@ public class StorageUtils {
 		
 	public static long ID_OFFSET = (long)(Math.pow(2,32) - Math.pow(2,31));
 	
+	public static final String FAKE_HOST = "storage";
+	
 	/**
 	 * convert binary id (long) into file path pattern string
 	 * this method disperse the binary file to different path tree.<br>
@@ -132,7 +134,7 @@ public class StorageUtils {
 		
 		StringBuffer buf = new StringBuffer();
 		buf.append(GeneralConstants.GP_SCHEME).append("://")
-			.append(storageId.toString())
+			.append(FAKE_HOST).append(GeneralConstants.KEYS_SEPARATOR).append(storageId.getId())
 			.append(toPathKey(binaryId, postfix));
 		
 		return buf.toString();
@@ -150,7 +152,7 @@ public class StorageUtils {
 		
 		StringBuffer buf = new StringBuffer();
 		buf.append(GeneralConstants.GP_SCHEME).append("://")
-			.append(storageId.toString())
+			.append(FAKE_HOST).append(GeneralConstants.KEYS_SEPARATOR).append(storageId.getId())
 			.append(pathKey);
 		
 		return buf.toString();

@@ -20,7 +20,7 @@ public class GeneralConstants {
 	/** Separator used to combine key-value pairs-> "," */
 	public static final String KVPAIRS_SEPARATOR = ",";
 	
-	/** Separator used to combine key-value -> "," */
+	/** Separator used to combine key-value -> "=" */
 	public static final String KEYVAL_SEPARATOR = "=";
 	
 	/** Separator used to combine resource and instance -> "@" */
