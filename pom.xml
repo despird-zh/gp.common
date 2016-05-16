@@ -7,7 +7,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jdk.version>1.7.0</jdk.version>
-		<jdk.home>C:\Program Files\Java\jdk1.8.0_65</jdk.home>
+		<jdk.home>/Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home</jdk.home>
 		<slf4j.version>1.7.19</slf4j.version>
 		<log4j.version>2.5</log4j.version>
 		<guava.version>18.0</guava.version>
@@ -20,13 +20,6 @@
 		<org.springframework.version>4.2.0.RELEASE</org.springframework.version>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>jdk.tools</groupId>
-			<artifactId>jdk.tools</artifactId>
-			<version>${jdk.version}</version>
-			<scope>system</scope>
-			<systemPath>${jdk.home}/lib/tools.jar</systemPath>
-		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
