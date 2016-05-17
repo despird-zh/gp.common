@@ -3,6 +3,7 @@ package com.gp.pool;
 import java.nio.ByteBuffer;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -45,9 +46,19 @@ public class ByteBufferPool extends AbstractPool<ByteBuffer>{
         super.release(item);        
     }
     
-    private void queueMonitor(){    	
-    	// check pool conditions in a separate thread
-    	executorService = Executors.newSingleThreadScheduledExecutor();
+    /**
+     * Prepare a monitor thread to shrink the useless byte buffers, leave GC to process them. 
+     **/
+    private void queueMonitor(){    
+    	
+    	// check pool conditions in a separate thread and make it a daemon one.
+    	executorService = Executors.newSingleThreadScheduledExecutor(new ThreadFactory() {
+            public Thread newThread(Runnable r) {
+                Thread t = Executors.defaultThreadFactory().newThread(r);
+                t.setDaemon(true);
+                return t;
+            }
+        });
     	executorService.scheduleAtFixedRate(new Runnable()
     	{
     		@Override 
@@ -81,7 +92,7 @@ public class ByteBufferPool extends AbstractPool<ByteBuffer>{
     		}
     			
     	}, validationInterval, validationInterval, TimeUnit.SECONDS);
-
+  
     }
 
 	@Override
