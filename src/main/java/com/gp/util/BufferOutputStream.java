@@ -9,25 +9,43 @@ public class BufferOutputStream extends OutputStream {
 
 	private static final int BUF_SIZE = 4 * 1024; // 4K
 
-	ByteBuffer bbuf;
-
+	private ByteBuffer bbuf;
+	
+	private int capacity;
+	
 	public BufferOutputStream(ByteBuffer buf) {
 		this.bbuf = buf;
+		this.capacity = buf.capacity();
 	}
 
+	public BufferOutputStream(ByteBuffer buf, int capacity) throws IOException{
+		if(bbuf.capacity() < capacity)
+			throw new IOException("buffer overflow capacity:"+bbuf.capacity());
+		
+		this.bbuf = buf;
+		this.capacity = capacity;
+	}
+	
 	@Override
 	public void write(int b) throws IOException {
+		if(bbuf.position() + 4 > capacity)
+			throw new IOException("buffer overflow current position is:"+bbuf.position());
 		bbuf.put((byte) b);
 	}
 
 	@Override
 	public void write(byte[] bytes, int off, int len) throws IOException {
+		
+		if(bbuf.position() + len > capacity)
+			throw new IOException("buffer overflow current position is:"+bbuf.position());
+		
 		bbuf.put(bytes, off, len);
 	}
 
 	@Override
 	public void close(){
 		this.bbuf = null;
+		this.capacity = 0;
 	}
 	
 	/**
@@ -40,7 +58,7 @@ public class BufferOutputStream extends OutputStream {
 	public long writeFromStream(InputStream from) throws IOException {
 		byte[] buf = new byte[BUF_SIZE];
 		long total = 0;
-		int available = this.bbuf.capacity();
+		int available = this.capacity;
 		while (available > 0) {
 			
 			int r = available > BUF_SIZE ? 

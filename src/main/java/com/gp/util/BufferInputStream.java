@@ -9,15 +9,22 @@ public class BufferInputStream extends InputStream {
 	
 	private static final int BUF_SIZE = 4 * 1024; // 4K
 	
-	ByteBuffer bbuf;
-
+	private ByteBuffer bbuf;
+	private int capacity;
+	
 	public BufferInputStream(ByteBuffer buf) {
 		this.bbuf = buf;
+		this.capacity = buf.capacity();
 	}
 
+	public BufferInputStream(ByteBuffer buf, int capacity) {
+		this.bbuf = buf;
+		this.capacity = capacity;
+	}
+	
 	@Override
 	public int read() throws IOException {
-		if (!bbuf.hasRemaining()) {
+		if (!bbuf.hasRemaining() || bbuf.position() > capacity) {
 			return -1;
 		}
 		return bbuf.get() & 0xFF;
@@ -25,11 +32,13 @@ public class BufferInputStream extends InputStream {
 
 	@Override
 	public int read(byte[] bytes, int off, int len) throws IOException {
-		if (!bbuf.hasRemaining()) {
+		
+		if (!bbuf.hasRemaining() || bbuf.position() > capacity) {
 			return -1;
 		}
 
 		len = Math.min(len, bbuf.remaining());
+		len = Math.min(len, this.capacity - bbuf.position());
 		bbuf.get(bytes, off, len);
 		return len;
 	}
@@ -37,7 +46,9 @@ public class BufferInputStream extends InputStream {
 	@Override
 	public void close(){
 		this.bbuf = null;
+		this.capacity = 0;
 	}
+	
 	/**
 	 * Read the buffer bytes from this InputStream to the OutputStream
 	 * 
