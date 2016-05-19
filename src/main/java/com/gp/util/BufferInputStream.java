@@ -24,7 +24,7 @@ public class BufferInputStream extends InputStream {
 	
 	@Override
 	public int read() throws IOException {
-		if (!bbuf.hasRemaining() || bbuf.position() > capacity) {
+		if (!bbuf.hasRemaining() || bbuf.position() >= capacity) {
 			return -1;
 		}
 		return bbuf.get() & 0xFF;
@@ -33,7 +33,7 @@ public class BufferInputStream extends InputStream {
 	@Override
 	public int read(byte[] bytes, int off, int len) throws IOException {
 		
-		if (!bbuf.hasRemaining() || bbuf.position() > capacity) {
+		if (!bbuf.hasRemaining() || bbuf.position() >= capacity) {
 			return -1;
 		}
 
