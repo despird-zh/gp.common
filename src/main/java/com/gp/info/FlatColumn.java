@@ -21,13 +21,11 @@ public class FlatColumn implements FlatColLocator{
 		this.index = index;
 	}
 	
-	@Override
 	public Integer getColIndex() {
 		
 		return index;
 	}
 
-	@Override
 	public String getColPrefix() {
 		
 		return prefix;
@@ -60,9 +58,7 @@ public class FlatColumn implements FlatColLocator{
 		FlatColLocator rhs = (FlatColLocator) obj;
 		
 		return new EqualsBuilder()
-		                .appendSuper(super.equals(obj))
-		                .append(index, rhs.getColIndex())
-		                .append(prefix, rhs.getColPrefix())
+		                .append(index, rhs.getColumn())
 		                .isEquals();
 	}
 }

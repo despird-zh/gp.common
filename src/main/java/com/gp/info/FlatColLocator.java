@@ -11,16 +11,6 @@ package com.gp.info;
 public interface FlatColLocator {
 	
 	/**
-	 * Get the index of column 
-	 **/
-	public Integer getColIndex();
-	
-	/**
-	 * Get the prefix of column 
-	 **/
-	public String getColPrefix();
-	
-	/**
 	 * Get the column name 
 	 **/
 	public String getColumn();
