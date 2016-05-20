@@ -16,6 +16,19 @@ public class FlatColumn implements FlatColLocator{
 	
 	private Integer index = null;
 	
+	/**
+	 * The constructor with column 
+	 * @param column the column name
+	 **/
+	public FlatColumn(String column){
+		this.prefix = column;
+	}
+	
+	/**
+	 * the constructor with prefix and column index
+	 * @param prefix the prefix of column
+	 * @param index the index of column 
+	 **/
 	public FlatColumn(String prefix, Integer index){
 		this.prefix = prefix;
 		this.index = index;
@@ -34,7 +47,7 @@ public class FlatColumn implements FlatColLocator{
 	@Override
 	public String getColumn() {
 		
-		return prefix + index;
+		return (index == null) ? prefix : prefix + index;
 	}
 
 	@Override
