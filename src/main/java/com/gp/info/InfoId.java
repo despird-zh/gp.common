@@ -12,7 +12,7 @@ import com.gp.common.GeneralConstants;
  * type indicates the table information
  * id locate the record position.
  * 
- * @author gary 
+ * @author gary diao
  * @version 0.1 2015-10-2
  * 
  **/
@@ -136,6 +136,8 @@ public class InfoId <K> implements Serializable{
 
 	/**
 	 * check if the InforId is valid 
+	 * @param the id object to be checked
+	 * @return true valid; false invalid
 	 **/
 	public static boolean isValid(InfoId<?> id){
 		
