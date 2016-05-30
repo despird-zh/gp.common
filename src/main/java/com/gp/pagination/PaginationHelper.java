@@ -1,5 +1,11 @@
 package com.gp.pagination;
 
+/**
+ * Pagination helper class facilitate to calculate the pagination setting.
+ * 
+ * @author garydiao
+ * @version 0.1 2015-12-12
+ **/
 public class PaginationHelper {
 	
 	// total Rows
@@ -32,26 +38,23 @@ public class PaginationHelper {
     }
 
     /**
-     * 构造函数。
-     * 
-     * @param totalRows
-     *            总行数
-     * @param currentPage
-     *            当前页数
+     * Constructor with total rows and current page
+     * default page size is 20 and menu size is 5.
+     * @param totalRows total rows        
+     * @param currentPage the current page number start from 1 ... n
+     *            
      */
     public PaginationHelper(int totalRows, int currentPage) {
         setPaginationSupport(totalRows, currentPage);
     }
 
     /**
-     * general 构造函数。
+     * Constructor with totalRows and current page and detail setting
      * 
-     * @param totalRows
-     *            总行数
-     * @param currentPage
-     *            当前页数
-     * @param pageSize
-     *            每页显示数量。
+     * @param totalRows total rows        
+     * @param currentPage the current page number start from 1 ... n
+     * @param pageSize the rows of per page
+     * @param menuSize the page menus
      */
     public PaginationHelper(int totalRows, int currentPage, int pageSize, int menuSize) {
         this.pageSize = pageSize;
@@ -59,32 +62,38 @@ public class PaginationHelper {
         this.setPaginationSupport(totalRows, currentPage);
     }
 
+    /**
+     * Get the page number menus, [2,3,4,5,6] or [15,16,17] of current page
+     **/
     public int[] getPageNumMenus() {
         return pageNumMenus;
     }
 
+    /**
+     * Set the size of page 
+     **/
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
     }
 
 	/**
-     * 
+     * Get the Page number menus of specified page context.
      * 
      * @param currentPage
-     * @return
+     * @return the page number menus
      */
-    private int[] getPageMenuNums(int currentPage) {
+    private int[] getPageNumMenus(int currentPage) {
     	int[] pageNums = null;
 
-        if (totalPages > menuSize) {// 总页数大于导航显示的页数
+        if (totalPages > menuSize) {// Total page numbers greater than the visible menus
 
             pageNums = new int[menuSize];
 
-            int lastMenuNum = totalPages - menuSize + 1;// 最后一列导航栏按钮
+            int lastMenuNum = totalPages - menuSize + 1;// the last page number menu
 
             int beginMumNum = menuSize;
 
-            int x = menuSize - 1;// 导航显示系数
+            int x = menuSize - 1;// index of page number
 
             if ((currentPage < lastMenuNum) && (currentPage > beginMumNum)) {
 
@@ -119,7 +128,6 @@ public class PaginationHelper {
         } else {// total pages less than the page tag amount
             pageNums = new int[totalPages];
 
-            // 分页数比总页数少
             for (int i = 0; i < totalPages; i++) {
                 pageNums[i] = i + 1;
             }
@@ -148,9 +156,9 @@ public class PaginationHelper {
     }
 
     /**
-     * set current page
+     * set current page 
      * 
-     * @param curPage
+     * @param curPage the page number, start from 1
      */
     private void setCurrentPage(int curPage) {
 
@@ -187,64 +195,105 @@ public class PaginationHelper {
         pageEndRow = (pageEndRow > this.totalRowsAmount -1) ? (this.totalRowsAmount) : pageEndRow;
     }
 
+    /**
+     * Set the pagination parameter.
+     * @param totalRows the rows total
+     * @param currentPage the current page. 
+     **/
     public void setPaginationSupport(int totalRows, int currentPage) {
         // 
         setTotalRowsAmount(totalRows);
         setCurrentPage(currentPage);
-        pageNumMenus = getPageMenuNums(currentPage);
+        pageNumMenus = getPageNumMenus(currentPage);
     }
 
+    /**
+     * Get the current page 
+     **/
     public int getCurrentPage() {
         return currentPage;
     }
 
+    /**
+     * has next page or not 
+     **/
     public boolean hasNext() {
         return hasNext;
     }
 
+    /**
+     * has previous or not 
+     **/
     public boolean hasPrevious() {
         return hasPrevious;
     }
 
+    /**
+     * get next page number 
+     **/
     public int getNextPage() {
         return nextPage;
     }
 
+    /**
+     * get the page size 
+     **/
     public int getPageSize() {
         return pageSize;
     }
 
+    /**
+     * get previous page number 
+     **/
     public int getPreviousPage() {
         return previousPage;
     }
 
+    /**
+     * get total page numbers 
+     **/
     public int getTotalPages() {
         return totalPages;
     }
 
+    /**
+     * Get the total rows 
+     **/
     public int getTotalRowsAmount() {
         return totalRowsAmount;
     }
 
+    /**
+     * Get the page start row 
+     **/
     public int getPageStartRow() {
         return pageStartRow;
     }
     
     /**
-     * 取得页的结束行索引，该行索引为排除项
+     * Get the page end row
      **/
     public int getPageEndRow() {
         return pageEndRow;
     }
 
+    /**
+     * get the page menu size 
+     **/
     public int getMenuSize() {
         return menuSize;
     }
 
+    /**
+     * set the page menu size 
+     **/
     public void setMenuSize(int menuSize) {
         this.menuSize = menuSize;
     }
     
+    /**
+     * Get the pagination information 
+     **/
     public PaginationInfo getPaginationInfo(){
 
     	PaginationInfo pinfo = new PaginationInfo(this.pageNumMenus);
