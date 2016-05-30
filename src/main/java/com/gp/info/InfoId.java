@@ -4,13 +4,15 @@ import java.io.Serializable;
 
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import com.gp.common.GeneralConstants;
 
 /**
  * Define the key of table record, it include type and id.
- * type indicates the table information
- * id locate the record position.
+ * the InfoId<K> class will holds the table name and id column information.
+ * it also support equals and hashCode operation
  * 
  * @author gary diao
  * @version 0.1 2015-10-2
@@ -167,8 +169,38 @@ public class InfoId <K> implements Serializable{
 		return true;
 	}
 
+	/**
+	 * Get the column of id 
+	 **/
 	public String getIdColumn() {
 		return idColumn;
 	}
 
+	@Override
+	public boolean equals(Object other) {
+		// step 1
+		if (other == this) {
+			return true;
+		}
+		// step 2
+		if (!(other instanceof InfoId)) {
+			return false;
+		}
+		// step 3
+		InfoId<?> that = (InfoId<?>) other;
+
+		return new EqualsBuilder()
+			.append(this.idKey, this.idKey)
+			.append(this.id, that.id).isEquals();
+		
+	}
+
+	@Override
+	public int hashCode() {
+				
+		return new HashCodeBuilder(17, 37)
+			.append(this.idKey)
+			.append(this.id).toHashCode();
+			
+	}
 }
