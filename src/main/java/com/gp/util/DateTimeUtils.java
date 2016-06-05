@@ -40,8 +40,8 @@ public class DateTimeUtils {
             TimeUnit.MINUTES.toMillis(1),
             TimeUnit.SECONDS.toMillis(1) );
     
-    public static final List<String> TIMESTRINGS = Arrays.asList("year","month","day","hour","minute","second");
-    
+    public static final List<String> TIMESTRINGS_EN = Arrays.asList("year","month","day","hour","minute","second");
+    public static final List<String> TIMESTRINGS_ZH = Arrays.asList("年","月","天","小时","分钟","秒");
     /**
 	 * convert the date into specified time zone 
 	 **/
@@ -112,29 +112,18 @@ public class DateTimeUtils {
      */
 	public static String toDuration(long duration) {
 
-	    StringBuffer res = new StringBuffer();
-	    for(int i=0;i < TIMES.size(); i++) {
-	        Long current = TIMES.get(i);
-	        long temp = duration/current;
-	        if(temp>0) {
-	            res.append(temp).append(" ").append( TIMESTRINGS.get(i) ).append(temp > 1 ? "s" : "");
-		        long temp2 = duration%current;
-		        if(i < TIMES.size() -1 ){
-		        	current = TIMES.get(i + 1);
-		        	temp = temp2/current;
-		        	if(temp>0) {
-		        		res.append(" ").append(temp).append(" ").append( TIMESTRINGS.get(i+1) ).append(temp > 1 ? "s" : "");
-		        	}
-		        }
-	            break;	        
-	        }
-	    }
-	    if("".equals(res.toString()))
-	        return "0 second ago";
-	    else
-	        return res.toString();
+	    return toDuration(duration, Locale.ENGLISH);
 	}
 	
+	public static String toDuration(long duration, Locale locale) {
+		List<String> TIMESTRINGS = null;
+		if(Locale.ENGLISH.equals(locale))
+			TIMESTRINGS = TIMESTRINGS_EN;
+		else{
+			TIMESTRINGS = TIMESTRINGS_ZH;
+		}
+		return toDuration(duration, TIMESTRINGS, locale);
+	}
 	 /**
      * converts time (in milliseconds) to human-readable format
      *  "<w> days, <x> hours, <y> minutes and (z) seconds"
@@ -157,7 +146,7 @@ public class DateTimeUtils {
 		        	temp = temp2/current;
 		        	if(temp>0) {
 		        		res.append(" ").append(temp).append(" ").append( TIMESTRINGS.get(i+1) );
-			            if(!"zh_cn".equals(locale.getLanguage()))
+			            if("en_us".equals(locale.getLanguage()))
 			            	res.append(temp > 1 ? "s" : "");
 		        	}
 		        }
