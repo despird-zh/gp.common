@@ -2,7 +2,6 @@ package com.gp.info;
 
 import java.net.URI;
 
-import com.gp.exception.CoreException;
 import com.gp.info.InfoId;
 import com.gp.util.StorageUtils;
 
