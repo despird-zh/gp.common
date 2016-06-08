@@ -24,13 +24,11 @@ public class StorageException extends BaseException{
     }
     
 	public StorageException(Locale locale, String errorcode, Object... param) {
-		super(errorcode, param);
-		this.message = findMessage(locale, errorcode, param);
+		super(locale, errorcode, param);
 	}
 	
     public StorageException(Locale locale, String errorcode, Throwable cause,Object ...param) {
-        super(errorcode, cause);
-        this.message = findMessage(locale,errorcode, param);
+        super(locale, errorcode, cause, param);
     }
     
     public StorageException(Throwable cause) {
@@ -45,8 +43,8 @@ public class StorageException extends BaseException{
 			rb = loadResourceBundle(locale, StorageException.class);
 			storage_bundles.put(locale, rb);
 		}
-		String messagePattern = (rb == null) ? errorcode : rb.getString(errorcode);
-		if(StringUtils.isBlank(messagePattern)){
+		String messagePattern =  (rb == null || !rb.containsKey(errorcode)) ? errorcode :  rb.getString(errorcode);
+		if(StringUtils.equals(messagePattern, errorcode)){
 			return super.findMessage(locale, errorcode, param);
 		}
 		return MessageFormat.format(messagePattern, param);
