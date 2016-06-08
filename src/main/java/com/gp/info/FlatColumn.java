@@ -71,7 +71,7 @@ public class FlatColumn implements FlatColLocator{
 		FlatColLocator rhs = (FlatColLocator) obj;
 		
 		return new EqualsBuilder()
-		                .append(index, rhs.getColumn())
+		                .append(getColumn(), rhs.getColumn())
 		                .isEquals();
 	}
 }
