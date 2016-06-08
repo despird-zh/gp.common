@@ -1,4 +1,4 @@
-package gp.util;
+package com.gp.util;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
