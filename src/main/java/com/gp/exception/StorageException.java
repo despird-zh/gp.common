@@ -1,13 +1,12 @@
 package com.gp.exception;
 
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.helpers.MessageFormatter;
-
 import com.gp.exception.BaseException;
 
 public class StorageException extends BaseException{
@@ -16,20 +15,20 @@ public class StorageException extends BaseException{
 
 	private static Map<Locale, ResourceBundle> storage_bundles = new HashMap<Locale, ResourceBundle>();
 
-	public StorageException(String errorcode,String ...param){
+	public StorageException(String errorcode,Object ...param){
 		this(Locale.getDefault(),errorcode, param);
 	}
 	
-    public StorageException(String errorcode, Throwable cause,String ...param) {
+    public StorageException(String errorcode, Throwable cause,Object ...param) {
         this(Locale.getDefault(), errorcode, cause, param);
     }
     
-	public StorageException(Locale locale, String errorcode, String... param) {
+	public StorageException(Locale locale, String errorcode, Object... param) {
 		super(errorcode, param);
 		this.message = findMessage(locale, errorcode, param);
 	}
 	
-    public StorageException(Locale locale, String errorcode, Throwable cause,String ...param) {
+    public StorageException(Locale locale, String errorcode, Throwable cause,Object ...param) {
         super(errorcode, cause);
         this.message = findMessage(locale,errorcode, param);
     }
@@ -39,7 +38,7 @@ public class StorageException extends BaseException{
     }
     	
     @Override
-	protected String findMessage(Locale locale, String errorcode,String ... param){
+	protected String findMessage(Locale locale, String errorcode,Object ... param){
 		
 		ResourceBundle rb = storage_bundles.get(locale);
 		if(rb == null){
@@ -50,7 +49,7 @@ public class StorageException extends BaseException{
 		if(StringUtils.isBlank(messagePattern)){
 			return super.findMessage(locale, errorcode, param);
 		}
-		return MessageFormatter.arrayFormat(messagePattern, param).getMessage();
+		return MessageFormat.format(messagePattern, param);
 	}
 
 }

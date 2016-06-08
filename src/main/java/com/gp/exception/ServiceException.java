@@ -1,40 +1,33 @@
 package com.gp.exception;
 
-import java.util.ArrayList;
+import java.text.MessageFormat;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.helpers.MessageFormatter;
-
-import com.gp.validation.ValidationMessage;
 
 public class ServiceException  extends BaseException{
 
 	private static final long serialVersionUID = 1L;
 	
 	private static Map<Locale, ResourceBundle> svc_bundles = new HashMap<Locale, ResourceBundle>();
-	
-	/** the message holder */
-	private List<ValidationMessage> messages = null;
-	
-	public ServiceException(String errorcode,String ...param){
+
+	public ServiceException(String errorcode,Object ...param){
 		this(Locale.getDefault(),errorcode, param);
 	}
 	
-    public ServiceException(String errorcode, Throwable cause,String ...param) {
+    public ServiceException(String errorcode, Throwable cause,Object ...param) {
         this(Locale.getDefault(), errorcode, cause, param);
     }
     
-	public ServiceException(Locale locale, String errorcode, String... param) {
+	public ServiceException(Locale locale, String errorcode, Object... param) {
 		super(errorcode, param);
 		this.message = findMessage(locale, errorcode, param);
 	}
 	
-    public ServiceException(Locale locale, String errorcode, Throwable cause,String ...param) {
+    public ServiceException(Locale locale, String errorcode, Throwable cause,Object ...param) {
         super(errorcode, cause);
         this.message = findMessage(locale, errorcode, param);
     }
@@ -44,7 +37,7 @@ public class ServiceException  extends BaseException{
     }
     
     @Override
-	protected String findMessage(Locale locale, String errorcode,String ... param){
+	protected String findMessage(Locale locale, String errorcode,Object ... param){
 		
 		ResourceBundle rb = svc_bundles.get(locale);
 		if(rb == null){
@@ -55,25 +48,7 @@ public class ServiceException  extends BaseException{
 		if(StringUtils.isBlank(messagePattern)){
 			return super.findMessage(locale, errorcode, param);
 		}
-		return MessageFormatter.arrayFormat(messagePattern, param).getMessage();
+		return MessageFormat.format(messagePattern, param);
 	}
 
-	public List<ValidationMessage> getValidationMessages() {
-		return messages;
-	}
-
-	public void addValidationMessages(List<ValidationMessage> messages) {
-		if(this.messages == null)
-			this.messages = new ArrayList<ValidationMessage>();
-		
-		this.messages.addAll(messages);
-	}
-
-	public void addValidationMessage(ValidationMessage message){
-		
-		if(this.messages == null)
-			this.messages = new ArrayList<ValidationMessage>();
-		
-		this.messages.add(message);
-	}
 }

@@ -2,6 +2,7 @@ package com.gp.exception;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -9,7 +10,6 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.helpers.MessageFormatter;
 
 public class BaseException extends Exception {
 
@@ -33,20 +33,20 @@ public class BaseException extends Exception {
 		return rb;		
 	}
 	
-	public BaseException(String errorcode,String ...param){
+	public BaseException(String errorcode,Object ...param){
 		this(Locale.getDefault(),errorcode, param);
 	}
 	
-    public BaseException(String errorcode, Throwable cause,String ...param) {
+    public BaseException(String errorcode, Throwable cause,Object ...param) {
         this(Locale.getDefault(), errorcode, cause, param);
     }
     
-	public BaseException(Locale locale,String errorcode,String ...param){
+	public BaseException(Locale locale,String errorcode,Object ...param){
 		super(errorcode);
 		this.message = findMessage(locale,errorcode, param);
 	}
 	
-    public BaseException(Locale locale,String errorcode, Throwable cause,String ...param) {
+    public BaseException(Locale locale,String errorcode, Throwable cause,Object ...param) {
         super(errorcode, cause);
         this.message = findMessage(locale,errorcode, param);
     }
@@ -66,7 +66,7 @@ public class BaseException extends Exception {
 		return this.message;
 	}
 	
-	protected String findMessage(Locale locale, String errorcode,String ... param){
+	protected String findMessage(Locale locale, String errorcode,Object ... param){
 		
 		ResourceBundle rb = base_bundles.get(locale);
 		if(rb == null){
@@ -77,7 +77,7 @@ public class BaseException extends Exception {
 		
 		messagePattern = StringUtils.isBlank(messagePattern)? errorcode : messagePattern;
 		
-		return MessageFormatter.arrayFormat(messagePattern, param).getMessage();
+		return MessageFormat.format(messagePattern, param);
 	}
 		
 	public void printStackTrace(PrintStream s)
