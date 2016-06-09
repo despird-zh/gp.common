@@ -19,6 +19,8 @@ public class BaseException extends Exception {
 	
 	protected String message;
 	
+	protected Locale locale;
+	
 	protected static ResourceBundle loadResourceBundle(Locale locale,Class<?> selfclazz){
 		
 		String fullname = selfclazz.getName();		
@@ -26,7 +28,7 @@ public class BaseException extends Exception {
 		
 		ResourceBundle rb = null;
 		try{
-		rb = ResourceBundle.getBundle(fullname, locale);
+			rb = ResourceBundle.getBundle(fullname, locale);
 		}catch(MissingResourceException mre){
 			// ignore
 		}
@@ -43,19 +45,33 @@ public class BaseException extends Exception {
     
 	public BaseException(Locale locale,String errorcode,Object ...param){
 		super(errorcode);
+		this.locale = locale;
 		this.message = findMessage(locale,errorcode, param);
 	}
 	
     public BaseException(Locale locale,String errorcode, Throwable cause,Object ...param) {
         super(errorcode, cause);
+        this.locale = locale;
         this.message = findMessage(locale,errorcode, param);
     }
     
     public BaseException(Throwable cause) {
         super(cause);
+        this.locale = Locale.getDefault();
     }
     
-	public String getErrorcode(){
+    /**
+     * Get the locale of current exception. 
+     **/
+    public Locale getLocale(){
+    	
+    	return this.locale;
+    }
+    
+    /**
+     * Get the code of current exception. 
+     **/
+	public String getCode(){
 		
 		return super.getMessage();
 	}
@@ -66,16 +82,19 @@ public class BaseException extends Exception {
 		return this.message;
 	}
 	
-	protected String findMessage(Locale locale, String errorcode,Object ... param){
+	/**
+	 * Find the message with code under specified locale.
+	 **/
+	protected String findMessage(Locale locale, String code, Object ... param){
 		
 		ResourceBundle rb = base_bundles.get(locale);
 		if(rb == null){
 			rb = loadResourceBundle(locale, BaseException.class);
 			base_bundles.put(locale, rb);
 		}
-		String messagePattern = (rb == null) ? errorcode : rb.getString(errorcode);
+		String messagePattern = (rb == null) ? code : rb.getString(code);
 		
-		messagePattern = StringUtils.isBlank(messagePattern)? errorcode : messagePattern;
+		messagePattern = StringUtils.isBlank(messagePattern)? code : messagePattern;
 		
 		return MessageFormat.format(messagePattern, param);
 	}
@@ -83,18 +102,15 @@ public class BaseException extends Exception {
 	public void printStackTrace(PrintStream s)
 	{	
 	    super.printStackTrace(s);
-	    
 	}
 	 
 	public void printStackTrace(PrintWriter s)
 	{
 		super.printStackTrace(s);
-
-	 }
+	}
 	
 	public void printStackTrace()
 	{
-
 		printStackTrace(System.err);
 	}
 	
