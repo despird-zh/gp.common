@@ -1,12 +1,12 @@
-package com.gp.validation;
+package com.gp.validate;
 
-public class ValidationMessage {
+public class ValidateMessage {
 	
 	private String property;
 	
 	private String message;
 
-	public ValidationMessage(String property, String message){
+	public ValidateMessage(String property, String message){
 		
 		this.property = property;
 		this.message = message;
