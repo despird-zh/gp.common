@@ -31,7 +31,7 @@ import com.gp.info.InfoId;
  * @author gary diao 
  * @version 0.1 2014-10-10
  **/
-public class GeneralContext<A> implements AutoCloseable{
+public class GeneralContext implements AutoCloseable{
 	
 	/**
 	 * State indicates the execution result 
@@ -181,7 +181,7 @@ public class GeneralContext<A> implements AutoCloseable{
 	 * 
 	 * @return A which hold the audit data
 	 **/
-	public A getAuditData(){
+	public <A> A getAuditData(Class<A> clazz){
 		
 		return null;
 	}
