@@ -92,10 +92,11 @@ public class BaseException extends Exception {
 			rb = loadResourceBundle(locale, BaseException.class);
 			base_bundles.put(locale, rb);
 		}
-		String messagePattern = (rb == null) ? code : rb.getString(code);
+		String messagePattern =  (rb == null || !rb.containsKey(code)) ? code :  rb.getString(code);
 		
-		messagePattern = StringUtils.isBlank(messagePattern)? code : messagePattern;
-		
+		if(StringUtils.equals(messagePattern, code)){
+			return code;
+		}
 		return MessageFormat.format(messagePattern, param);
 	}
 		
