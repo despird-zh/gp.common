@@ -54,7 +54,7 @@ public class GeneralConstants {
 	public static final Long PERSON_WORKGROUP = -999l;
 	
 	/** organization work group */
-	public static final Long ORGHIER_WORKGROUP = -900l;
+	public static final Long ORGHIER_WORKGROUP = -998l;
 		
 	/** the root organization hierarchy root id */
 	public static final Long ORGHIER_ROOT = -99l;
