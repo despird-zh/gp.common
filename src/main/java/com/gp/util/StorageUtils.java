@@ -158,4 +158,55 @@ public class StorageUtils {
 		return buf.toString();
 	}
 
+	/**
+	 * the static method to calculate the chunk count as per specified chunk size
+	 * 
+	 * @param filesize 
+	 * @param chunkSize
+	 * @return the amount of chunks
+	 **/
+	public static int calcAmount(long filesize, int chunkSize){
+		// re-calculate the chunks amount
+		int chunkAmount = (int) (filesize / chunkSize);
+		if (filesize % chunkSize > 0) {
+			chunkAmount++;
+		}
+		return chunkAmount;
+	}
+	
+	/**
+	 * static method to calculate the offset position 
+	 * @param fileSize the size of file
+	 * @param chunkIndex the index of file chunks
+	 * @param chunkSize the size of file chunk
+	 *  
+	 **/
+	public static long calcOffset(Long fileSize, int chunkIndex, int chunkSize){
+
+		return Math.min(fileSize, chunkIndex * chunkSize);
+	}
+	
+	/**
+	 * static method to calculate the offset position 
+	 * @param fileSize the size of file
+	 * @param chunkIndex the index of file chunks
+	 * @param chunkSize the size of file chunk
+	 *  
+	 **/
+	public static long calcLength(Long fileSize, int chunkIndex, int chunkSize){
+		// index set 
+		if(chunkIndex > 0){
+			long bytesRemaining = fileSize - chunkIndex * chunkSize;
+			// re-calculate the current chunk length
+			if(bytesRemaining <= 0 ) {
+				return fileSize - (chunkIndex - 1) * chunkSize;
+				
+			}else{			
+				return Math.min(bytesRemaining, chunkSize);
+			}
+		}else{
+			return Math.min(fileSize, chunkSize);
+		}
+
+	}
 }
