@@ -48,7 +48,7 @@ public class GeneralConstants {
 	public static final String EVERYONE_SUBJECT = "everyone";
 	
 	/** local system instance to differentiate with remote system*/
-	public static final Integer LOCAL_INSTANCE = -9999;
+	public static final Integer LOCAL_SOURCE = -9999;
 	
 	/** person own cabinet work group */
 	public static final Long PERSON_WORKGROUP = -999l;

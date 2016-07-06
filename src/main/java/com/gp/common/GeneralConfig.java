@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Retrieve the configuration variables from environment configuration properties
  * file. 
- * EnvConfiguration.getInstance().getString("demo.key");<br>
+ * GeneralConfig.getString("demo.key");<br>
  * the property file locate under root of class path:<em>envconfig.properties</em>
  * <p>
  * 	this class extends from Apache configuration PropertiesConfiguration
