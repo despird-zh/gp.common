@@ -12,7 +12,7 @@ import com.gp.common.GeneralConstants;
 /**
  * Define the key of table record, it include type and id.
  * the InfoId<K> class will holds the table name and id column information.
- * it also support equals and hashCode operation
+ * it also support equals and hashCode operation.
  * 
  * @author gary diao
  * @version 0.1 2015-10-2
