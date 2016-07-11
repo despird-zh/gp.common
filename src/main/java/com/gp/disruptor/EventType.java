@@ -7,11 +7,13 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * The event type to identify payload and hooker
  **/
 public class EventType {
-	
+
 	/** audit event type  */
 	public static EventType AUDIT   = new EventType(10);
+	/** measure event type */
+	public static EventType MEASURE   = new EventType(11);
 	/** index event type */
-	public static EventType CORE   = new EventType(12); 
+	public static EventType CORE   = new EventType(12);
 	/** unknown event type */
 	public static EventType UNKNOWN = new EventType(13); 
 	
@@ -47,7 +49,7 @@ public class EventType {
 	@Override
 	public String toString(){
 		
-		return "type:"+String.valueOf(type);
+		return "EventType:" + String.valueOf(type);
 	}
 
 }
