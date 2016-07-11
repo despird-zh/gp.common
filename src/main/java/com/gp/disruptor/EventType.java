@@ -10,8 +10,6 @@ public class EventType {
 
 	/** audit event type  */
 	public static EventType AUDIT   = new EventType(10);
-	/** measure event type */
-	public static EventType MEASURE   = new EventType(11);
 	/** index event type */
 	public static EventType CORE   = new EventType(12);
 	/** unknown event type */
