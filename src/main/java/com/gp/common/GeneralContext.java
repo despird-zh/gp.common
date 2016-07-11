@@ -143,7 +143,7 @@ public class GeneralContext implements AutoCloseable{
 	 * @param object the data to locate the data to be processed
 	 * @param predicate the parameters etc.
 	 **/
-	public void beginAudit(String subject, String verb, InfoId<?> object, Object predicate){
+	public void beginOperation(String subject, String verb, InfoId<?> object, Object predicate){
 		
 		// do nothing
 	}
@@ -152,7 +152,7 @@ public class GeneralContext implements AutoCloseable{
 	 * Add the predicate to operation primary verb 
 	 * @param predicate the bean or Map object preferred 
 	 **/
-	public void addAuditPredicates(Object predicate){
+	public void addOperationPredicates(Object predicate){
 		
 		// do nothing
 	}
@@ -161,7 +161,7 @@ public class GeneralContext implements AutoCloseable{
 	 * Set the operation target object
 	 * @param object the target object identifier 
 	 **/
-	public void setAuditObject(InfoId<?> object){
+	public void setOperationObject(InfoId<?> object){
 		
 		// do nothing
 	}
@@ -171,7 +171,7 @@ public class GeneralContext implements AutoCloseable{
 	 * @param state the result of operation reference to ExecState
 	 * @param message the message of operation 
 	 **/
-	public void endAudit(ExecState state, String message){
+	public void endOperation(ExecState state, String message){
 		
 		// do nothing
 	}
@@ -181,7 +181,7 @@ public class GeneralContext implements AutoCloseable{
 	 * 
 	 * @return A which hold the audit data
 	 **/
-	public <A> A getAuditData(Class<A> clazz){
+	public <A> A getOperationData(Class<A> clazz){
 		
 		return null;
 	}
@@ -189,7 +189,7 @@ public class GeneralContext implements AutoCloseable{
 	/**
 	 * Persist the audit data, persist way to be implemented in subclass. 
 	 **/
-	public void persistAuditData(){		
+	public void handleOperationData(){		
 		// do nothing
 	}
 	
