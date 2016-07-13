@@ -158,10 +158,10 @@ public class InfoId <K> implements Serializable{
 			
 			return true;
 			
-		}else if( id.getId() instanceof Integer && (int)(id.getId()) < 1){
+		}else if( id.getId() instanceof Integer && (Integer)(id.getId()) < 1){
 			
 			return false;
-		}else if( id.getId() instanceof Long && (long)(id.getId()) < 1){
+		}else if( id.getId() instanceof Long && (Long)(id.getId()) < 1){
 			
 			return false;
 		}

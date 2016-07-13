@@ -13,10 +13,9 @@ import com.google.common.base.Charsets;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
-import com.gp.info.InfoId;
+import com.gp.util.Base64;
 import com.gp.util.ByteString;
 import com.gp.util.HashUtils;
-import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 import junit.framework.TestCase;
 
