@@ -152,8 +152,13 @@ public class GeneralContext implements AutoCloseable{
 	 * Add the predicate to operation primary verb 
 	 * @param predicate the bean or Map object preferred 
 	 **/
-	public void addOperationPredicates(Object predicate){
+	public void addOperationPredicate(String predicateKey, Object predicate){
 		
+		// do nothing
+	}
+	
+	
+	public void addOperationPredicates(Object predicates){
 		// do nothing
 	}
 	
