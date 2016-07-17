@@ -34,7 +34,7 @@ public class InfoId <K> implements Serializable{
 	/**
 	 * constructor with table and id 
 	 **/
-	protected InfoId(String idKey, K id){
+	public InfoId(String idKey, K id){
 		this.idKey = idKey;
 		this.id = id;
 	}
@@ -90,7 +90,7 @@ public class InfoId <K> implements Serializable{
 	@Override
 	public String toString(){
 		
-		return this.idKey + GeneralConstants.KEYS_SEPARATOR + id.toString();
+		return this.idKey + GeneralConstants.KEYS_SEPARATOR + this.getIdColumn() + GeneralConstants.KEYS_SEPARATOR + id.toString();
 	}
 	
 	/**

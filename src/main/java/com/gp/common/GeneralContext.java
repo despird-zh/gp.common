@@ -162,7 +162,6 @@ public class GeneralContext implements AutoCloseable{
 	 * @param object the target object identifier 
 	 **/
 	public void setOperationObject(InfoId<?> object){
-		
 		// do nothing
 	}
 	
