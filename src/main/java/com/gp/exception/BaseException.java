@@ -17,8 +17,19 @@ public class BaseException extends Exception {
 
 	private static Map<Locale, ResourceBundle> base_bundles = new HashMap<Locale, ResourceBundle>();
 	
+	/**
+	 * matched message
+	 **/
 	protected String message;
 	
+	/**
+	 * Find matched message or not
+	 **/
+	protected boolean matched;
+	
+	/**
+	 * The locale setting
+	 **/
 	protected Locale locale;
 	
 	protected static ResourceBundle loadResourceBundle(Locale locale,Class<?> selfclazz){
@@ -61,6 +72,14 @@ public class BaseException extends Exception {
     }
     
     /**
+     * find matched message pattern or not
+     * @return true: found; false: not found 
+     **/
+    public boolean matched(){
+    	
+    	return matched;
+    }
+    /**
      * Get the locale of current exception. 
      **/
     public Locale getLocale(){
@@ -92,10 +111,14 @@ public class BaseException extends Exception {
 			rb = loadResourceBundle(locale, BaseException.class);
 			base_bundles.put(locale, rb);
 		}
-		String messagePattern =  (rb == null || !rb.containsKey(code)) ? code :  rb.getString(code);
-		
-		if(StringUtils.equals(messagePattern, code)){
+		String messagePattern = null;
+		if(rb == null || !rb.containsKey(code)){
+			messagePattern = code ;
+			matched = false;
 			return code;
+		}else{
+			rb.getString(code);
+			matched = true;
 		}
 		return MessageFormat.format(messagePattern, param);
 	}
