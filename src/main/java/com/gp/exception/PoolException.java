@@ -15,22 +15,37 @@ public class PoolException extends BaseException{
 
 	private static Map<Locale, ResourceBundle> pool_bundles = new HashMap<Locale, ResourceBundle>();
 
+	/**
+	 * Constructor with error code and parameters
+	 **/
 	public PoolException(String errorcode,Object ...param){
 		this(Locale.getDefault(),errorcode, param);
 	}
-	
+
+	/**
+	 * Constructor with error code and parameters and cause
+	 **/
     public PoolException(String errorcode, Throwable cause,Object ...param) {
         this(Locale.getDefault(), errorcode, cause, param);
     }
-    
+
+	/**
+	 * Constructor with error code and parameters
+	 **/
 	public PoolException(Locale locale, String errorcode, Object... param) {
 		super(locale, errorcode, param);
 	}
-	
+
+	/**
+	 * Constructor with error code and parameters and cause
+	 **/
     public PoolException(Locale locale, String errorcode, Throwable cause,Object ...param) {
         super(locale, errorcode, cause, param);
     }
-    
+
+	/**
+	 * Constructor with cause exception
+	 **/
     public PoolException(Throwable cause) {
         super(cause);
     }

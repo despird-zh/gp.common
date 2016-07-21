@@ -15,22 +15,37 @@ public class StorageException extends BaseException{
 
 	private static Map<Locale, ResourceBundle> storage_bundles = new HashMap<Locale, ResourceBundle>();
 
+	/**
+	 * Constructor with error code and parameters
+	 **/
 	public StorageException(String errorcode,Object ...param){
 		this(Locale.getDefault(),errorcode, param);
 	}
-	
+
+	/**
+	 * Constructor with error code, cause and parameters
+	 **/
     public StorageException(String errorcode, Throwable cause,Object ...param) {
         this(Locale.getDefault(), errorcode, cause, param);
     }
-    
+
+	/**
+	 * Constructor with error code and parameters
+	 **/
 	public StorageException(Locale locale, String errorcode, Object... param) {
 		super(locale, errorcode, param);
 	}
-	
+
+	/**
+	 * Constructor with error code, cause and parameters
+	 **/
     public StorageException(Locale locale, String errorcode, Throwable cause,Object ...param) {
         super(locale, errorcode, cause, param);
     }
-    
+
+	/**
+	 * Constructor with cause
+	 **/
     public StorageException(Throwable cause) {
         super(cause);
     }

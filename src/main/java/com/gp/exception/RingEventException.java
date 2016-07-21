@@ -13,23 +13,38 @@ public class RingEventException  extends BaseException{
 	private static final long serialVersionUID = 1L;
 
 	private static Map<Locale, ResourceBundle> event_bundles = new HashMap<Locale, ResourceBundle>();
-	
+
+	/**
+	 * Constructor with error code and parameters
+	 **/
 	public RingEventException(String errorcode,Object ...param){
 		this(Locale.getDefault(),errorcode, param);
 	}
-	
+
+	/**
+	 * Constructor with error code, cause and parameters
+	 **/
     public RingEventException(String errorcode, Throwable cause,Object ...param) {
         this(Locale.getDefault(), errorcode, cause, param);
     }
-    
+
+	/**
+	 * Constructor with error code and parameters
+	 **/
 	public RingEventException(Locale locale, String errorcode, Object... param) {
 		super(locale, errorcode, param);
 	}
-	
+
+	/**
+	 * Constructor with error code, cause and parameters
+	 **/
     public RingEventException(Locale locale, String errorcode, Throwable cause,Object ...param) {
         super(locale, errorcode, cause, param);
     }
-    
+
+	/**
+	 * Constructor with cause
+	 **/
     public RingEventException(Throwable cause) {
         super(cause);
     }
