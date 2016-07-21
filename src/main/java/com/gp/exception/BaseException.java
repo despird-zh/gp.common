@@ -113,11 +113,10 @@ public class BaseException extends Exception {
 		}
 		String messagePattern = null;
 		if(rb == null || !rb.containsKey(code)){
-			messagePattern = code ;
 			matched = false;
 			return code;
 		}else{
-			rb.getString(code);
+			messagePattern = rb.getString(code);
 			matched = true;
 		}
 		return MessageFormat.format(messagePattern, param);

@@ -42,9 +42,14 @@ public class RingEventException  extends BaseException{
 			rb = loadResourceBundle(locale, RingEventException.class);
 			event_bundles.put(locale, rb);
 		}
-		String messagePattern =  (rb == null || !rb.containsKey(errorcode)) ? errorcode :  rb.getString(errorcode);
-		if(StringUtils.equals(messagePattern, errorcode)){
+		String messagePattern ;
+		if(rb == null || !rb.containsKey(errorcode)){
+			matched = false;
+			// try to find from super class.
 			return super.findMessage(locale, errorcode, param);
+		}else{
+			messagePattern = rb.getString(errorcode);
+			matched = true;
 		}
 		return MessageFormat.format(messagePattern, param);
 	}
