@@ -51,7 +51,7 @@ public class GeneralConstants {
 	public static final Integer LOCAL_SOURCE = -9999;
 	
 	/** person own cabinet work group */
-	public static final Long PERSON_WORKGROUP = -999l;
+	public static final Long PERSONAL_WORKGROUP = -999l;
 	
 	/** organization work group */
 	public static final Long ORGHIER_WORKGROUP = -998l;

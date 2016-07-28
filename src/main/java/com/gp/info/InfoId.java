@@ -151,7 +151,7 @@ public class InfoId <K> implements Serializable{
 			return false;
 			
 		}else if(ObjectUtils.equals(id.getId(), GeneralConstants.LOCAL_SOURCE )||
-				ObjectUtils.equals(id.getId(), GeneralConstants.PERSON_WORKGROUP) ||
+				ObjectUtils.equals(id.getId(), GeneralConstants.PERSONAL_WORKGROUP) ||
 				ObjectUtils.equals(id.getId(), GeneralConstants.ORGHIER_WORKGROUP) ||
 				ObjectUtils.equals(id.getId(), GeneralConstants.ORGHIER_ROOT) ||
 				ObjectUtils.equals(id.getId(), GeneralConstants.FOLDER_ROOT) ){
