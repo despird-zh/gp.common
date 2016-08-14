@@ -62,6 +62,9 @@ public class GeneralConstants {
 	/** the root folder id of cabinet's folder */
 	public static final Long FOLDER_ROOT = -98l;
 	
+	/** the root place holder */
+	public static final Long ROOT_PLACEHOLDER = -9l;
+	
 	/** the scheme defined in URI string to locate the resource */
 	public static String GP_SCHEME = "gbin";
 	
