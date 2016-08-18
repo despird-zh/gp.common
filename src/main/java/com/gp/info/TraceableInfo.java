@@ -2,6 +2,12 @@ package com.gp.info;
 
 import java.util.Date;
 
+/**
+ * This class implements the necessary method for traceable table record.
+ *
+ * @author  gary diao
+ * @version 0.1
+ **/
 public class TraceableInfo<K> implements BaseInfo<K>{
 
 	private static final long serialVersionUID = 1L;
@@ -34,5 +40,10 @@ public class TraceableInfo<K> implements BaseInfo<K>{
 
 	public void setInfoId(InfoId<K> infoId) {
 		this.infoId = infoId;
+	}
+
+	public K getId(){
+		if(null == infoId) return null;
+		return infoId.getId();
 	}
 }
