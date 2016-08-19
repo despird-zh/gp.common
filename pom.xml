@@ -16,7 +16,7 @@
 		<zk.version>3.4.6</zk.version>
 		<httpclient.version>4.5.1</httpclient.version>
 		<protobuf.version>2.6.1</protobuf.version>
-		<jackson.version>2.7.6</jackson.version>
+		<jackson.version>2.6.2</jackson.version>
 		<org.springframework.version>4.2.0.RELEASE</org.springframework.version>
 	</properties>
 	<dependencies>
