@@ -1,10 +1,24 @@
 package com.gp.util;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class CommonUtils {
-	
+
+	private static Logger LOGGER = LoggerFactory.getLogger(CommonUtils.class);
+
+	public static ObjectMapper JSON_MAPPER = new ObjectMapper();
+
 	public static boolean isNumeric(String str) {
 		Pattern pattern = Pattern.compile("-?[0-9]*");
 		Matcher isNum = pattern.matcher(str);
@@ -37,5 +51,92 @@ public class CommonUtils {
 	{
 
 		return humanReadableByteCount(bytes, false);
+	}
+
+	/**
+	 * Convert a set into a Json String
+	 **/
+	public static String toJson(Set<?> set){
+		if(CollectionUtils.isEmpty(set))
+			return "[]";
+		try {
+			return JSON_MAPPER.writeValueAsString(set);
+		} catch (JsonProcessingException e) {
+			LOGGER.error("Fail convert Set<String> perm to String", e);
+		}
+		return StringUtils.EMPTY;
+	}
+
+	/**
+	 * Convert a Json array String into Set
+	 **/
+	public static <T> Set<T> toSet(String setJson, Class<T> clazzz){
+		if(StringUtils.isBlank(setJson))
+			return new HashSet<T>();
+
+		try {
+			return JSON_MAPPER.readValue(setJson, new TypeReference<Set<T>>(){});
+		} catch ( IOException e) {
+			LOGGER.error("Fail convert Set<String> setJson to String", e);
+		}
+		return new HashSet<T>();
+	}
+
+	/**
+	 * Convert a Json Object String into Map
+	 **/
+	public static String toJson(Map<String, Object> propmap){
+		if(null == propmap)
+			return "{}";
+		try {
+			return JSON_MAPPER.writeValueAsString(propmap);
+		} catch (JsonProcessingException e) {
+			LOGGER.error("Fail convert Map<String, Object> propmap to String", e);
+		}
+		return StringUtils.EMPTY;
+	}
+
+	/**
+	 * Convert json object string into map
+	 **/
+	public static Map<String, Object> toMap(String props){
+		if(StringUtils.isBlank(props))
+			return new HashMap<String,Object>();
+
+		try {
+			return JSON_MAPPER.readValue(props, new TypeReference<Map<String, Object>>(){});
+		} catch ( IOException e) {
+			LOGGER.error("Fail convert Json string to Map<String, Object> propmap", e);
+		}
+		return new HashMap<String,Object>();
+	}
+
+	/**
+	 * Convert a Json Object String into Map
+	 **/
+	public static String toJson(List<?> list){
+		if(CollectionUtils.isEmpty(list))
+			return "{}";
+		try {
+			return JSON_MAPPER.writeValueAsString(list);
+		} catch (JsonProcessingException e) {
+			LOGGER.error("Fail convert List<?> list to String", e);
+		}
+		return StringUtils.EMPTY;
+	}
+
+	/**
+	 * Convert json object string into list
+	 **/
+	public static <T> List<T> toList(String listJson, Class<T> clazz){
+		if(StringUtils.isBlank(listJson))
+			return new ArrayList<T>();
+
+		try {
+			return JSON_MAPPER.readValue(listJson, new TypeReference<List<T>>(){});
+		} catch ( IOException e) {
+			LOGGER.error("Fail convert Json string to List< Object> listJson", e);
+		}
+		return new ArrayList<T>();
 	}
 }
