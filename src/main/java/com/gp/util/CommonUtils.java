@@ -97,18 +97,32 @@ public class CommonUtils {
 	}
 
 	/**
+	 * Convert a Json Object String into Map
+	 **/
+	public static <T> String toJson(Map<String, T> propmap, Class<T> T){
+		if(null == propmap)
+			return "{}";
+		try {
+			return JSON_MAPPER.writeValueAsString(propmap);
+		} catch (JsonProcessingException e) {
+			LOGGER.error("Fail convert Map<String, Object> propmap to String", e);
+		}
+		return StringUtils.EMPTY;
+	}
+
+	/**
 	 * Convert json object string into map
 	 **/
-	public static Map<String, Object> toMap(String props){
+	public static <T>  Map<String, T> toMap(String props, Class<T> T){
 		if(StringUtils.isBlank(props))
-			return new HashMap<String,Object>();
+			return new HashMap<String,T>();
 
 		try {
-			return JSON_MAPPER.readValue(props, new TypeReference<Map<String, Object>>(){});
+			return JSON_MAPPER.readValue(props, new TypeReference<Map<String, T>>(){});
 		} catch ( IOException e) {
 			LOGGER.error("Fail convert Json string to Map<String, Object> propmap", e);
 		}
-		return new HashMap<String,Object>();
+		return new HashMap<String,T>();
 	}
 
 	/**

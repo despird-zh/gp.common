@@ -16,7 +16,13 @@ public interface Identifier {
 	 * 
 	 * */
 	public String getSchema();
-	
+
+	/**
+	 * get the id column name
+	 *
+	 * */
+	public String getIdColumn();
+
 	/**
 	 * create a new InfoId<T> object. 
 	 **/

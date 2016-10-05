@@ -53,6 +53,7 @@ public class InfoId <K> implements Serializable{
 	 **/
 	public InfoId(Identifier idKey, K id){
 		this.idKey = idKey.getSchema();
+		this.idColumn = idKey.getIdColumn();
 		this.id = id;
 	}
 	
