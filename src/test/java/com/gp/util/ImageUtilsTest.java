@@ -12,6 +12,7 @@ public class ImageUtilsTest {
 		test2();
 	}
 	
+	
 	public static void test2(){
 		
 		try {
