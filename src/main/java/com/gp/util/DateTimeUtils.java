@@ -1,6 +1,10 @@
 package com.gp.util;
 
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -8,9 +12,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
-import org.joda.time.LocalDateTime;
+
 
 public class DateTimeUtils {
 	
@@ -42,40 +44,17 @@ public class DateTimeUtils {
     
     public static final List<String> TIMESTRINGS_EN = Arrays.asList("year","month","day","hour","minute","second");
     public static final List<String> TIMESTRINGS_ZH = Arrays.asList("年","月","天","小时","分钟","秒");
-    /**
-	 * convert the date into specified time zone 
-	 **/
-	public static Date toTimeZone(Date origin, TimeZone timezone){
-		
-		DateTimeZone elzone = DateTimeZone.forTimeZone(timezone);		
-		return toTimeZone(origin,elzone);
-	}
 	
 	/**
-	 * convert the date into specified time zone 
+	 * convert the local date into specified time zone 
 	 **/
 	public static Date toTimeZone(Date origin, String timezone){
 		
-		DateTimeZone elzone = DateTimeZone.forID(timezone);		
-		return toTimeZone(origin,elzone);
-	}
-	
-	/**
-	 * convert the date into specified time zone 
-	 **/
-	public static Date toTimeZone(Date origin, DateTimeZone elzone){
+		ZoneId targetZoneId = ZoneId.of(timezone);
+		Instant instant = origin.toInstant();//Zone : UTC+0
+		ZonedDateTime localDateTime = instant.atZone(targetZoneId);
 		
-		DateTime dateTime = new LocalDateTime(origin.getTime()).toDateTime(elzone);
-		return dateTime.toDate();
-		
-	}
-	
-	/**
-	 * Convert the string into DateTimeZone 
-	 **/
-	public static DateTimeZone forTimeZone(String timezone){
-		
-		return DateTimeZone.forTimeZone(TimeZone.getTimeZone(timezone));
+		return Date.from(localDateTime.toInstant());
 	}
 	
 	/**
