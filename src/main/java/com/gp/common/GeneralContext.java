@@ -138,7 +138,6 @@ public class GeneralContext implements AutoCloseable{
 	 * begin the operation with necessary information
 	 * 
 	 * @param subject the execute user
-	 * @param operation the operation to be audited
 	 * @param verb the primary verb of operation
 	 * @param object the data to locate the data to be processed
 	 * @param predicate the parameters etc.
