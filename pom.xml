@@ -10,7 +10,7 @@
 		<jdk.home>/Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home</jdk.home>
 		<slf4j.version>1.7.22</slf4j.version>
 		<log4j.version>2.7</log4j.version>
-		<guava.version>18.0</guava.version>
+		<guava.version>19.0</guava.version>
 		<comm.config>1.10</comm.config>
 		<disruptor.version>3.3.6</disruptor.version>
 		<jackson.version>2.8.5</jackson.version>
@@ -20,6 +20,7 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${slf4j.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
