@@ -6,8 +6,6 @@
 	<version>0.1</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jdk.version>1.7.0</jdk.version>
-		<jdk.home>/Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home</jdk.home>
 		<slf4j.version>1.7.22</slf4j.version>
 		<log4j.version>2.7</log4j.version>
 		<guava.version>19.0</guava.version>
