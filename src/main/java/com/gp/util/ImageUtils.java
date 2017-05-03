@@ -3,6 +3,7 @@ package com.gp.util;
 import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -46,6 +47,7 @@ public class ImageUtils {
 	public static BufferedImage crop(BufferedImage image, int startX, int startY, int width, int height){
 		
 		 BufferedImage dest = image.getSubimage(startX, startY, width, height);
+
 	     return dest; 
 	}
 	
@@ -79,7 +81,7 @@ public class ImageUtils {
      */
 	public static BufferedImage resize(String filePath, int width, int height) {
 
-		BufferedImage  bufdest = read(filePath);
+		BufferedImage  bufdest = read(new File(filePath));
 		return resize(bufdest, width, height);
 
 	}
@@ -191,13 +193,39 @@ public class ImageUtils {
 	 * @param filePath File path of target file
 	 * @return the buffered image  
 	 **/
-	public static BufferedImage read(String filePath){
+	public static BufferedImage read(File file){
 		
 		BufferedImage bufsrc = null;
 		
 		try {
-			bufsrc = ImageIO.read(new File(filePath));
+			bufsrc = ImageIO.read(file);
 			return bufsrc;
+		} catch (IOException e) {
+			LOGGER.error("error resize the image.", e);
+			// restore the old background
+			return null;
+		}
+		
+	}
+	
+	/**
+	 * Load file into a buffer image
+	 * @param filePath File path of target file
+	 * @return the buffered image  
+	 **/
+	public static BufferedImage read(String base64Img){
+		
+		BufferedImage bufsrc = null;
+		
+		try {
+			String base64Image = base64Img.split(",")[1];
+			byte[] imageByte = Base64.decode(base64Image);
+			ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+			bufsrc = ImageIO.read(bis);
+			
+			bis.close();
+			return bufsrc;
+			
 		} catch (IOException e) {
 			LOGGER.error("error resize the image.", e);
 			// restore the old background
