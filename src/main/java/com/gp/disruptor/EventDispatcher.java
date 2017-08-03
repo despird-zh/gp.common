@@ -2,8 +2,7 @@ package com.gp.disruptor;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.slf4j.Logger;
@@ -29,8 +28,6 @@ public class EventDispatcher {
 	static Logger LOGGER = LoggerFactory.getLogger(EventDispatcher.class);
 
 	private AtomicInteger hookerIdGenerator = new AtomicInteger(100); 	
-	/** the executor pool */
-	private ExecutorService executor = null;
 	/** the Disruptor instance */
 	private Disruptor<RingEvent> disruptor = null;
 	/** the event handler */
@@ -108,7 +105,6 @@ public class EventDispatcher {
 	public void shutdown(){
 		
 		disruptor.shutdown();
-		executor.shutdown();
 		this.running = false;
 	}
 	
@@ -128,12 +124,16 @@ public class EventDispatcher {
 	@SuppressWarnings("unchecked")
 	private void initial(int buffersize) {
 		// Executor that will be used to construct new threads for consumers
-		this.executor = Executors.newCachedThreadPool();
+		ThreadFactory threadFactory = new ThreadFactory() {
+			   public Thread newThread(Runnable r) {
+			     return new Thread(r);
+			   }
+			 };
 		// Specify the size of the ring buffer, must be power of 2.
 		int bufferSize = buffersize;
 		EventFactory<RingEvent> eventbuilder = RingEvent.EVENT_FACTORY;
 		// create new Disruptor instance
-		disruptor = new Disruptor<RingEvent>(eventbuilder, bufferSize, executor);
+		disruptor = new Disruptor<RingEvent>(eventbuilder, bufferSize, threadFactory);
 		// Connect the handler
 		disruptor.handleEventsWith(handler);
 	}
