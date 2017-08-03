@@ -10,16 +10,13 @@ import com.gp.exception.BaseException;
  **/
 public abstract class CoreInitializer {
 
-	public final String hookerName;
-	
 	LifecycleHooker hooker = null;
 	/**
 	 * Default constructor, here the hooker will be bind to CoreLauncher
 	 **/
-	public CoreInitializer()throws BaseException{
+	public CoreInitializer() throws BaseException{
 		
 		hooker = setupLifecycleHooker();
-		this.hookerName = hooker.name();
 	}
 	
 	/**

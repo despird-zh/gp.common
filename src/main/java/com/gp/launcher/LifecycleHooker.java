@@ -8,19 +8,25 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import com.gp.launcher.Lifecycle.LifeState;
 
 public abstract class LifecycleHooker {
+
+	/** The ILifecycle launcher */
+	private Lifecycle launcher;
+	/** default name */
+	private String name = "listener";
+
+	/** the priority of hooker */
+	private int priority = 0;
+
+	public LifecycleHooker(int priority){
+		
+		this.priority = priority;
+	}
 	
 	public LifecycleHooker(String name, int priority){
 		
 		this.name = name;
 		this.priority = priority;
 	}
-	/** The ILifecycle launcher */
-	private Lifecycle launcher;
-	/** default name */
-	private String name = "listener";
-	/** the priority of hooker */
-	private int priority = 0;
-	
 	/**
 	 * Get the priority of listener 
 	 **/
@@ -29,12 +35,12 @@ public abstract class LifecycleHooker {
 		return priority;
 	}
 	
-	/**
-	 * Get the name of listener 
-	 **/
-	public String name(){
-		
-		return this.name;
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	/**
