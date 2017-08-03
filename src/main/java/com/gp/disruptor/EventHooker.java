@@ -13,7 +13,7 @@ import com.lmax.disruptor.RingBuffer;
  **/
 public abstract class EventHooker<T extends EventPayload> {
 	/** the event blocked or not */
-	private boolean blocked = false; 
+	private boolean syncBlocked = false; 
 	/** the event type */
 	private EventType eventType;
 	/** the ring buffer */
@@ -30,9 +30,9 @@ public abstract class EventHooker<T extends EventPayload> {
 	/**
 	 * The hooker is blocked or not, if hooker is blocked it ignore any event. 
 	 **/
-	public boolean isBlocked(){
+	public boolean isSyncBlocked(){
 		
-		return this.blocked;
+		return this.syncBlocked;
 	}
 	
 	/**
@@ -40,9 +40,9 @@ public abstract class EventHooker<T extends EventPayload> {
 	 * 
 	 * @param blocked true:Hooker won't process payload; false:Hooker process payload. 
 	 **/
-	public void setBlocked(boolean blocked){
+	public void setSyncBlocked(boolean syncBlocked){
 		
-		this.blocked = blocked;
+		this.syncBlocked = syncBlocked;
 	}
 	
 	/**

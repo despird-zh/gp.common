@@ -11,6 +11,8 @@ public class EventType {
 	/** audit event type  */
 	public static EventType AUDIT   = new EventType(10);
 	/** index event type */
+	public static EventType SYNC   = new EventType(11);
+	/** index event type */
 	public static EventType CORE   = new EventType(12);
 	/** unknown event type */
 	public static EventType UNKNOWN = new EventType(13); 

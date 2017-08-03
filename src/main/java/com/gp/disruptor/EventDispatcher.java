@@ -162,7 +162,7 @@ public class EventDispatcher {
 		EventPayload payload = ringevent.takePayload();
 		EventHooker<?> eventHooker = hookers.get(eventType);
 
-		if (eventHooker != null && !eventHooker.isBlocked()) {
+		if (eventHooker != null && !eventHooker.isSyncBlocked()) {
 
 			try {
 
@@ -245,7 +245,7 @@ public class EventDispatcher {
 		
 		EventHooker<?> eventHooker = hookers.get(eventType);
 		if(null != eventHooker)
-			eventHooker.setBlocked(blocked);
+			eventHooker.setSyncBlocked(blocked);
 	}
 	
 	/**
