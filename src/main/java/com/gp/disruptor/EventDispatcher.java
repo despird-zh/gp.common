@@ -27,6 +27,9 @@ public class EventDispatcher {
 
 	static Logger LOGGER = LoggerFactory.getLogger(EventDispatcher.class);
 
+	/** The life cycle hooker priority */
+	static public int LIFECYCLE_HOOKER_PRIORITY = 0;
+	
 	private AtomicInteger hookerIdGenerator = new AtomicInteger(100); 	
 	/** the Disruptor instance */
 	private Disruptor<RingEvent> disruptor = null;
@@ -45,7 +48,7 @@ public class EventDispatcher {
 	 **/
 	private EventDispatcher() {
 		
-		hooker = new LifecycleHooker("EventDispatcher", 0){
+		hooker = new LifecycleHooker("EventDispatcher", LIFECYCLE_HOOKER_PRIORITY){
 
 			@Override
 			public void initial() {
