@@ -18,7 +18,8 @@ public abstract class EventHooker<T extends EventPayload> {
 	private EventType eventType;
 	/** the ring buffer */
 	private RingBuffer<RingEvent> ringBuffer = null;
-	
+	/** the event producer */
+	private EventProducer<T> producer = null;
 	/**
 	 * Constructor:specify the eventype supported 
 	 **/
@@ -79,8 +80,10 @@ public abstract class EventHooker<T extends EventPayload> {
 		
 		if(null == ringBuffer)
 			throw new RingEventException("The RingBuffer not initialized yet.");
+		if(null == producer)
+			this.producer = new EventProducer<T>(ringBuffer, eventType);
 		
-		return new EventProducer<T>(ringBuffer, eventType);
+		return this.producer;
 	}
 	
 	/**

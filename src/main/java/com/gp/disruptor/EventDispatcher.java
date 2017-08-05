@@ -195,16 +195,27 @@ public class EventDispatcher {
 			return ;
 		RingBuffer<RingEvent> ringBuffer = disruptor.getRingBuffer();
 		long sequence = ringBuffer.next();  // Grab the next sequence
-	    try
-	    {
-	    	RingEvent event = ringBuffer.get(sequence); // Get the entry in the Disruptor
+	    try{
+	    		RingEvent event = ringBuffer.get(sequence); // Get the entry in the Disruptor
 	        event.setEventType(payload.getEventType());
-	    	event.setPayload(payload);  
+	        event.setPayload(payload);  
 	    }
 	    finally
 	    {
 	        ringBuffer.publish(sequence);// for the sequence
 	    }
+	}
+	
+	/**
+	 * Get the event producer, which used to publish event
+	 * 
+	 *  @param eventType the type of event
+	 **/
+	public EventProducer<?> getEventProducer(EventType eventType) throws RingEventException{
+		EventHooker<?> eventHooker = hookers.get(eventType);
+		if(eventHooker == null) return null;
+		
+		return eventHooker.getEventProducer();
 	}
 	
 	/**
