@@ -1,5 +1,6 @@
 package com.gp.disruptor;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadFactory;
@@ -165,12 +166,15 @@ public class EventDispatcher {
 		EventPayload payload = ringevent.takePayload();
 		EventHooker<?> eventHooker = hookers.get(eventType);
 
-		if (eventHooker != null && !eventHooker.isSyncBlocked()) {
+		if (eventHooker != null) {
 
 			try {
 
 				eventHooker.processPayload(payload);				
-				
+				Collection<EventPayload> chainPayloads = payload.getChainEventPayloads();
+				for(EventPayload chainPayload:chainPayloads) {
+					this.sendPayload(chainPayload);
+				}
 			} catch ( RuntimeException | RingEventException e) {
 				// here catch all the exception to avoid destroy the engine
 				LOGGER.error("Error when processing event[{" + eventType + "}] payload",  e);
@@ -247,19 +251,6 @@ public class EventDispatcher {
 		EventHooker<?> eventHooker = hookers.remove(eventType);
 		eventHooker.setRingBuffer(null);// clear reference to buffer.
 		
-	}
-	
-	/**
-	 * Block the event hooker
-	 * 
-	 * @param type the type of hooker 
-	 * @param blocked the flag of block or not 
-	 **/
-	public void blockEventHooker(EventType eventType,boolean blocked){
-		
-		EventHooker<?> eventHooker = hookers.get(eventType);
-		if(null != eventHooker)
-			eventHooker.setSyncBlocked(blocked);
 	}
 	
 	/**
