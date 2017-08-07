@@ -172,8 +172,10 @@ public class EventDispatcher {
 
 				eventHooker.processPayload(payload);				
 				Collection<EventPayload> chainPayloads = payload.getChainEventPayloads();
-				for(EventPayload chainPayload:chainPayloads) {
-					this.sendPayload(chainPayload);
+				if(chainPayloads != null) {
+					for(EventPayload chainPayload:chainPayloads) {
+						this.sendPayload(chainPayload);
+					}
 				}
 			} catch ( RuntimeException | RingEventException e) {
 				// here catch all the exception to avoid destroy the engine
