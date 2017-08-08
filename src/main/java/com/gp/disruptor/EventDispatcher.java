@@ -163,6 +163,9 @@ public class EventDispatcher {
 		
 		// After take payload, it is removed from ring event instance.
 		EventType eventType = ringevent.getEventType();
+		if(null == eventType) {
+			LOGGER.warn("EventType cannot be null");
+		}
 		EventPayload payload = ringevent.takePayload();
 		EventHooker<?> eventHooker = hookers.get(eventType);
 

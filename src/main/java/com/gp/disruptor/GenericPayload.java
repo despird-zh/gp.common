@@ -2,13 +2,12 @@ package com.gp.disruptor;
 
 public class GenericPayload<T> extends EventPayload{
 	
-	private EventType eventType;
 	
 	private T data = null;
 	
 	public GenericPayload(EventType eventType, T data){
 		
-		this.eventType = eventType;
+		this.setEventType(eventType);
 		this.data = data;
 	}
 	
@@ -16,11 +15,4 @@ public class GenericPayload<T> extends EventPayload{
 		
 		return this.data;
 	}
-
-	@Override
-	public EventType getEventType() {
-		
-		return eventType;
-	}
-
 }

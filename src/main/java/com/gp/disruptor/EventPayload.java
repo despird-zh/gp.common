@@ -11,15 +11,26 @@ import java.util.Set;
  * @version 0.1 2014-3-2
  *
  **/
-public abstract class EventPayload {
+public class EventPayload {
 	
-	Set<EventPayload> chainPayloads = null;
+	private Set<EventPayload> chainPayloads = null;
+	
+	private EventType eventType = null;
 	
 	/**
 	 * Return the event type of event. it be used to find the event hooker to 
 	 * digest it when published to event disruptor engine.
 	 **/
-	public abstract EventType getEventType();
+	public EventType getEventType() {
+		return eventType;
+	}
+	
+	/**
+	 * Set the event type 
+	 **/
+	public void setEventType(EventType eventType) {
+		this.eventType = eventType;
+	}
 	
 	/**
 	 * Return the chain event payloads
