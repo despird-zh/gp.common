@@ -173,7 +173,7 @@ public class EventDispatcher {
 
 			try {
 
-				eventHooker.processPayload(payload);				
+				eventHooker.processPayload(payload);
 				Collection<EventPayload> chainPayloads = payload.getChainEventPayloads();
 				if(chainPayloads != null) {
 					for(EventPayload chainPayload:chainPayloads) {

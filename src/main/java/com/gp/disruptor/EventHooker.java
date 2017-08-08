@@ -75,7 +75,7 @@ public abstract class EventHooker<T extends EventPayload> {
 	 * 
 	 **/
 	public abstract void processPayload(EventPayload payload) throws RingEventException;
-	
+
 	@Override
 	public boolean equals(Object other) {
 		// step 1
