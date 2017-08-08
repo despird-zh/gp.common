@@ -1,8 +1,6 @@
 package com.gp.disruptor;
 
-import java.util.Collection;
-
-public class GenericPayload<T> implements EventPayload{
+public class GenericPayload<T> extends EventPayload{
 	
 	private EventType eventType;
 	
@@ -25,9 +23,4 @@ public class GenericPayload<T> implements EventPayload{
 		return eventType;
 	}
 
-	@Override
-	public Collection<EventPayload> getChainEventPayloads() {
-		
-		return null;
-	}
 }
