@@ -45,7 +45,7 @@ public class GeneralConstants {
 	public static final String OWNER_SUBJECT = "owner";
 	
 	/** The constant value of acl other subject -> "other" */
-	public static final String EVERYONE_SUBJECT = "everyone";
+	public static final String ANYONE_SUBJECT = "anyone";
 	
 	/** local system instance to differentiate with remote system*/
 	public static final Integer LOCAL_SOURCE = -9999;
