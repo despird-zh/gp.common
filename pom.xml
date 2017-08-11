@@ -5,6 +5,7 @@
 	<artifactId>gp-common</artifactId>
 	<version>0.1</version>
 	<properties>
+		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<slf4j.version>1.7.22</slf4j.version>
 		<log4j.version>2.7</log4j.version>
