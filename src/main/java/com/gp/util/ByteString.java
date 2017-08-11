@@ -23,6 +23,7 @@ import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.Base64;
 
 /**
  * An immutable sequence of bytes.
@@ -83,7 +84,7 @@ public final class ByteString {
 	 * the RFC, the returned string does not wrap lines at 76 columns.
 	 */
 	public String base64() {
-		return Base64.encode(data);
+		return Base64.getEncoder().encodeToString(data);
 	}
 
 	/**
@@ -92,7 +93,7 @@ public final class ByteString {
 	 * of bytes.
 	 */
 	public static ByteString decodeBase64(String base64) {
-		byte[] decoded = Base64.decode(base64);
+		byte[] decoded = Base64.getDecoder().decode(base64);
 		return decoded != null ? new ByteString(decoded) : null;
 	}
 

@@ -13,7 +13,6 @@ import com.google.common.base.Charsets;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
-import com.gp.util.Base64;
 import com.gp.util.ByteString;
 import com.gp.util.HashUtils;
 
@@ -29,10 +28,10 @@ public class HashTest  extends TestCase{
 		
 		byte[] hashbytes = HashUtils.hash(pwd.toCharArray(), salt.getBytes(StandardCharsets.UTF_8));
 
-		String hashStr = Base64.encode(hashbytes);
+		String hashStr = java.util.Base64.getEncoder().encodeToString(hashbytes);
 		System.out.println("after encode "+hashStr);
 		
-		byte[] hashbytes2 = Base64.decode(hashStr);
+		byte[] hashbytes2 = java.util.Base64.getDecoder().decode(hashStr);
 		
 		boolean s3 = Arrays.equals(hashbytes, hashbytes2);
 		System.out.println(" --equals :" + s3);

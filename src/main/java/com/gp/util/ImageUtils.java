@@ -12,6 +12,7 @@ import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
@@ -219,7 +220,7 @@ public class ImageUtils {
 		
 		try {
 			String base64Image = base64Img.split(",")[1];
-			byte[] imageByte = Base64.decode(base64Image);
+			byte[] imageByte = Base64.getDecoder().decode(base64Image);
 			ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
 			bufsrc = ImageIO.read(bis);
 			
