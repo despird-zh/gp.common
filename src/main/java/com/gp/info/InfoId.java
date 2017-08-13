@@ -86,7 +86,7 @@ public class InfoId <K> implements Serializable{
 	}	
 	
 	/**
-	 * convert InfoId into string, format is {type}:{id} ,e.g audit:a000101 
+	 * convert InfoId into string, format is {type}:{column id}:{id} ,e.g audit:audit_id:a000101 
 	 **/
 	@Override
 	public String toString(){
@@ -108,7 +108,7 @@ public class InfoId <K> implements Serializable{
 		String[] parts = StringUtils.split(idstr, GeneralConstants.KEYS_SEPARATOR);
 		
 		M id = null;
-		if(parts.length == 1){
+		if(parts.length < 3){
 			
 			if(Integer.class.equals(idclazz))
 				id = (M)new Integer(-1);
@@ -119,22 +119,23 @@ public class InfoId <K> implements Serializable{
 			else if(String.class.equals(idclazz))
 				id = (M)new String();
 			
+			return new InfoId<M>(parts[0], id);
 		}
 		
-		if(parts.length >= 2 ){
+		if(parts.length == 3 ){
 			
 			if(Integer.class.equals(idclazz))
-				id = (M)Integer.valueOf(parts[1]);
+				id = (M)Integer.valueOf(parts[2]);
 			
 			else if(Long.class.equals(idclazz))
-				id = (M)Long.valueOf(parts[1]);
+				id = (M)Long.valueOf(parts[2]);
 			
 			else if(String.class.equals(idclazz))
-				id = (M)parts[1];
+				id = (M)parts[2];
 			
 		}
 				
-		return new InfoId<M>(parts[0], id);				
+		return new InfoId<M>(parts[0], parts[1], id);	
 	}
 
 	/**
