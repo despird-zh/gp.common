@@ -30,7 +30,7 @@ public class InfoId <K> implements Serializable{
 	
 	/** record id */
 	private K id;
-	
+
 	/**
 	 * constructor with table and id 
 	 **/
@@ -94,82 +94,6 @@ public class InfoId <K> implements Serializable{
 		return this.idKey + GeneralConstants.KEYS_SEPARATOR + this.getIdColumn() + GeneralConstants.KEYS_SEPARATOR + id.toString();
 	}
 	
-	/**
-	 * parse the string into InfoId object, format is {type}:{id} ,e.g audit:a000101 
-	 * 
-	 * @param idstr the id string get from InfoId.toString()
-	 * @param idclazz the class of Id
-	 **/
-	@SuppressWarnings("unchecked")
-	public static <M> InfoId<M> parseInfoId(String idstr, Class<M> idclazz){
-		
-		if(StringUtils.isBlank(idstr)) return null;
-		
-		String[] parts = StringUtils.split(idstr, GeneralConstants.KEYS_SEPARATOR);
-		
-		M id = null;
-		if(parts.length < 3){
-			
-			if(Integer.class.equals(idclazz))
-				id = (M)new Integer(-1);
-			
-			else if(Long.class.equals(idclazz))
-				id = (M)new Long(-1);
-			
-			else if(String.class.equals(idclazz))
-				id = (M)new String();
-			
-			return new InfoId<M>(parts[0], id);
-		}
-		
-		if(parts.length == 3 ){
-			
-			if(Integer.class.equals(idclazz))
-				id = (M)Integer.valueOf(parts[2]);
-			
-			else if(Long.class.equals(idclazz))
-				id = (M)Long.valueOf(parts[2]);
-			
-			else if(String.class.equals(idclazz))
-				id = (M)parts[2];
-			
-		}
-				
-		return new InfoId<M>(parts[0], parts[1], id);	
-	}
-
-	/**
-	 * check if the InforId is valid 
-	 * @param the id object to be checked
-	 * @return true valid; false invalid
-	 **/
-	public static boolean isValid(InfoId<?> id){
-		
-		if(id == null){ 
-			
-			return false;
-		}else if(id.getId() == null ){	
-			
-			return false;
-			
-		}else if(ObjectUtils.equals(id.getId(), GeneralConstants.LOCAL_SOURCE )||
-				ObjectUtils.equals(id.getId(), GeneralConstants.PERSONAL_WORKGROUP) ||
-				ObjectUtils.equals(id.getId(), GeneralConstants.ORGHIER_WORKGROUP) ||
-				ObjectUtils.equals(id.getId(), GeneralConstants.ORGHIER_ROOT) ||
-				ObjectUtils.equals(id.getId(), GeneralConstants.FOLDER_ROOT) ){
-			
-			return true;
-			
-		}else if( id.getId() instanceof Integer && (Integer)(id.getId()) < 1){
-			
-			return false;
-		}else if( id.getId() instanceof Long && (Long)(id.getId()) < 1){
-			
-			return false;
-		}
-		
-		return true;
-	}
 
 	/**
 	 * Get the column of id 
@@ -177,7 +101,14 @@ public class InfoId <K> implements Serializable{
 	public String getIdColumn() {
 		return idColumn;
 	}
-
+	
+	/**
+	 * Set the column of id 
+	 **/
+	public void setIdColumn(String idColumn) {
+		this.idColumn = idColumn;
+	}
+	
 	@Override
 	public boolean equals(Object other) {
 		// step 1

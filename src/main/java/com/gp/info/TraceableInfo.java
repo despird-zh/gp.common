@@ -2,6 +2,8 @@ package com.gp.info;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * This class implements the necessary method for traceable table record.
  *
@@ -42,6 +44,7 @@ public class TraceableInfo<K> implements BaseInfo<K>{
 		this.infoId = infoId;
 	}
 
+	@JsonIgnore
 	public K getId(){
 		if(null == infoId) return null;
 		return infoId.getId();

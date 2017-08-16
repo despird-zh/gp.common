@@ -15,15 +15,15 @@ public class BinaryStoreIdTest extends TestCase{
 		
 		System.out.println(i);
 		
-		InfoId<Integer> t = InfoId.parseInfoId(i.toString(), Integer.class);
+		InfoId<Integer> t = InfoIdHelper.parseInfoId(i.toString(), Integer.class);
 		
 		System.out.println(t);
 		
-		InfoId<Long> t1 = InfoId.parseInfoId("USER:2345", Long.class);
+		InfoId<Long> t1 = InfoIdHelper.parseInfoId("USER:2345", Long.class);
 		
-		InfoId<Long> t11 = InfoId.parseInfoId("USER", Long.class);
+		InfoId<Long> t11 = InfoIdHelper.parseInfoId("USER", Long.class);
 		
-		InfoId<String> t2 = InfoId.parseInfoId(i.toString(), String.class);
+		InfoId<String> t2 = InfoIdHelper.parseInfoId(i.toString(), String.class);
 
 		String pak = StorageUtils.toPathKey(367);
 		System.out.println("pathkey:" + pak);
