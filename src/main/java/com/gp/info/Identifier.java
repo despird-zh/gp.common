@@ -5,12 +5,7 @@ package com.gp.info;
  * 
  **/
 public interface Identifier {
-	
-	/**
-	 * Get the table name 
-	 **/
-	public String getTable();
-	
+
 	/**
 	 * get the schema name
 	 * 
@@ -26,5 +21,5 @@ public interface Identifier {
 	/**
 	 * create a new InfoId<T> object. 
 	 **/
-	public <T> InfoId<T> getInfoId(T sequence);
+	public Class<?> getIdClass();
 }
