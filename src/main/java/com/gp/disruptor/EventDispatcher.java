@@ -2,7 +2,9 @@ package com.gp.disruptor;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -35,7 +37,8 @@ public class EventDispatcher {
 	/** the Disruptor instance */
 	private Disruptor<RingEvent> disruptor = null;
 	/** the event handler */
-	private RingEventHandler handler = new RingEventHandler();
+	private Set<EventHandler<RingEvent>> handlers = new HashSet<EventHandler<RingEvent>>();
+	//(){ new RingEventHandler() }
 	/** the event hooker list */
 	private Map<EventType, EventHooker<?>> hookers = new HashMap<EventType, EventHooker<?>>();
 	/** single instance */
@@ -48,7 +51,9 @@ public class EventDispatcher {
 	 * default event disptacher
 	 **/
 	private EventDispatcher() {
-		
+		// add a default event handler
+		handlers.add(new RingEventHandler());
+		// define a lifecyle hooker.
 		hooker = new LifecycleHooker("EventDispatcher", LIFECYCLE_HOOKER_PRIORITY){
 
 			@Override
@@ -125,7 +130,6 @@ public class EventDispatcher {
 	/**
 	 * Set up the disruptor
 	 **/
-	@SuppressWarnings("unchecked")
 	private void initial(int buffersize) {
 		// Executor that will be used to construct new threads for consumers
 		ThreadFactory threadFactory = new ThreadFactory() {
@@ -136,10 +140,12 @@ public class EventDispatcher {
 		// Specify the size of the ring buffer, must be power of 2.
 		int bufferSize = buffersize;
 		EventFactory<RingEvent> eventbuilder = RingEvent.EVENT_FACTORY;
-		// create new Disruptor instance
+		// create new disruptor instance with multiple producers default
 		disruptor = new Disruptor<RingEvent>(eventbuilder, bufferSize, threadFactory);
+		@SuppressWarnings("unchecked")
+		EventHandler<RingEvent>[] handlerArray = (EventHandler<RingEvent>[]) handlers.toArray();
 		// Connect the handler
-		disruptor.handleEventsWith(handler);
+		disruptor.handleEventsWith(handlerArray);
 	}
 
 	/**
@@ -244,6 +250,15 @@ public class EventDispatcher {
 			eventHooker.setRingBuffer(disruptor.getRingBuffer());
 		
 		return eventHooker.getEventType();
+	}
+	
+	/**
+	 * Register the row event handler, it will be added to disruptor's handler Group to digest 
+	 * the event in parallel. 
+	 **/
+	public void regEventHandler(EventHandler<RingEvent> eventhandler) {
+		
+		this.handlers.add(eventhandler);
 	}
 	
 	/**
