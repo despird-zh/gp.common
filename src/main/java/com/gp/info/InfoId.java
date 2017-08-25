@@ -2,8 +2,6 @@ package com.gp.info;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
@@ -35,6 +33,9 @@ public class InfoId <K> implements Serializable{
 	 * constructor with table and id 
 	 **/
 	public InfoId(String idKey, K id){
+		if( !(id instanceof Long) || !(id instanceof Integer) || !(id instanceof String)) {
+			throw new IllegalArgumentException("the id must be Long/Integer/String");
+		}
 		this.idKey = idKey;
 		this.id = id;
 	}
@@ -43,18 +44,17 @@ public class InfoId <K> implements Serializable{
 	 * constructor with table name, id column and id value
 	 **/
 	public InfoId(String idKey,String idColumn, K id){
-		this.idKey = idKey;
+		this(idKey, id);
 		this.idColumn = idColumn;
-		this.id = id;
+		
 	}
 	
 	/**
 	 * constructor with Identifier and id 
 	 **/
 	public InfoId(Identifier idKey, K id){
-		this.idKey = idKey.getSchema();
-		this.idColumn = idKey.getIdColumn();
-		this.id = id;
+
+		this(idKey.getSchema(), idKey.getIdColumn(), id);
 	}
 	
 	/**
