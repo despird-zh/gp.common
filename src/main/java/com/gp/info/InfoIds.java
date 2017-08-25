@@ -16,7 +16,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.gp.common.GeneralConstants;
 
-public class InfoIdHelper {
+public class InfoIds {
 
 	/**
 	 * Make ObjectMapper support the InfoId module 
@@ -66,7 +66,7 @@ public class InfoIdHelper {
 			InfoId<?> rtv = null;
 			try {
 				Class<?> clazz = Class.forName(type);
-				rtv = InfoIdHelper.parseInfoId(fullStr.substring(idx + 1), clazz);
+				rtv = InfoIds.parseInfoId(fullStr.substring(idx + 1), clazz);
 			} catch (ClassNotFoundException e) {
 				
 				e.printStackTrace();
