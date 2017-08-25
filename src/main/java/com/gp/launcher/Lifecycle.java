@@ -42,7 +42,10 @@ public abstract class Lifecycle {
 	}
 	
 	/**
-	 * Register the life cycle listener  
+	 * Register the life cycle listener, the registering keeps the hooker with higher
+	 * priority be placed in the top of hooker list, eg.
+	 * [{priority=25},{priority=25},{priority=10},{priority=5},{priority=2}]
+	 * 
 	 **/
 	public void regLifecycleHooker(LifecycleHooker hooker){
 		
