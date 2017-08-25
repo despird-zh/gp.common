@@ -25,6 +25,10 @@ import com.lmax.disruptor.dsl.Disruptor;
  * @author despird
  * @version 0.1 2014-6-2
  * 
+ * @author diaogc
+ * @version 0.2 2017-8-4
+ * Update to support EventHandler registering.
+ * 
  **/
 public class EventDispatcher {
 
