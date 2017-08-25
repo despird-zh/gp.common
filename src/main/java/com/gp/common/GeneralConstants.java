@@ -23,7 +23,10 @@ package com.gp.common;
  **/
 public class GeneralConstants {
 	
-	/** Separator used to combine multiple keys ->":" */
+	/** Separator used to combine multiple opions ->"-" */
+	public static final String OPTS_SEPARATOR = "-";
+	
+	/** Separator used to combine multiple names ->"." */
 	public static final String NAMES_SEPARATOR = ".";
 	
 	/** Separator used to combine multiple keys ->":" */
