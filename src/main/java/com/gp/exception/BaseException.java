@@ -9,8 +9,6 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import org.apache.commons.lang.StringUtils;
-
 public class BaseException extends Exception {
 
 	private static final long serialVersionUID = 1L;

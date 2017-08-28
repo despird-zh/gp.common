@@ -17,7 +17,6 @@ import com.lmax.disruptor.EventFactory;
 import com.lmax.disruptor.EventHandler;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.dsl.Disruptor;
-import com.lmax.disruptor.dsl.EventHandlerGroup;
 
 /**
  * EventDisptcher is a singleton pattern object. It holds the necessary objects
@@ -56,8 +55,10 @@ public class EventDispatcher {
 	 * default event disptacher
 	 **/
 	private EventDispatcher() {
+		
 		// add a default event handler
 		handlers.add(new RingEventHandler());
+		
 		// define a lifecyle hooker.
 		hooker = new LifecycleHooker("EventDispatcher", LIFECYCLE_HOOKER_PRIORITY){
 
@@ -135,6 +136,7 @@ public class EventDispatcher {
 	/**
 	 * Set up the disruptor
 	 **/
+	@SuppressWarnings("unchecked")
 	private void initial(int buffersize) {
 		// Executor that will be used to construct new threads for consumers
 		ThreadFactory threadFactory = new ThreadFactory() {
@@ -142,15 +144,23 @@ public class EventDispatcher {
 			     return new Thread(r);
 			   }
 			 };
+			 
 		// Specify the size of the ring buffer, must be power of 2.
 		int bufferSize = buffersize;
 		EventFactory<RingEvent> eventbuilder = RingEvent.EVENT_FACTORY;
+		
 		// create new disruptor instance with multiple producers default
 		disruptor = new Disruptor<RingEvent>(eventbuilder, bufferSize, threadFactory);
-		@SuppressWarnings("unchecked")
-		EventHandler<RingEvent>[] handlerArray = (EventHandler<RingEvent>[]) handlers.toArray();
+		EventHandler<?>[] handlerArray = new EventHandler<?>[handlers.size()];
+		int i = 0;
+		for(EventHandler<?> handler : handlers) {
+			handlerArray[i] = handler;
+			i++;
+		}
+	
 		// Connect the handler
-		EventHandlerGroup<RingEvent> handlerGroup = disruptor.handleEventsWith(handlerArray);
+		//EventHandlerGroup<RingEvent> handlerGroup = 
+		disruptor.handleEventsWith((EventHandler<RingEvent>[])handlerArray);
 		//handlerGroup.then(handlers);
 	}
 
@@ -261,6 +271,8 @@ public class EventDispatcher {
 	/**
 	 * Register the row event handler, it will be added to disruptor's handler Group to digest 
 	 * the event in parallel. 
+	 * 
+	 * @param eventhandler the handler of event
 	 **/
 	public void regEventHandler(EventHandler<RingEvent> eventhandler) {
 		

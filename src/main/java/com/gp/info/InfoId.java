@@ -33,7 +33,8 @@ public class InfoId <K> implements Serializable{
 	 * constructor with table and id 
 	 **/
 	public InfoId(String idKey, K id){
-		if( !(id instanceof Long) || !(id instanceof Integer) || !(id instanceof String)) {
+
+		if( !(id instanceof Long) && !(id instanceof Integer) && !(id instanceof String)) {
 			throw new IllegalArgumentException("the id must be Long/Integer/String");
 		}
 		this.idKey = idKey;
