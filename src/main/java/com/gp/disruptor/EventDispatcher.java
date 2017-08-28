@@ -17,6 +17,7 @@ import com.lmax.disruptor.EventFactory;
 import com.lmax.disruptor.EventHandler;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.dsl.Disruptor;
+import com.lmax.disruptor.dsl.EventHandlerGroup;
 
 /**
  * EventDisptcher is a singleton pattern object. It holds the necessary objects
@@ -149,7 +150,8 @@ public class EventDispatcher {
 		@SuppressWarnings("unchecked")
 		EventHandler<RingEvent>[] handlerArray = (EventHandler<RingEvent>[]) handlers.toArray();
 		// Connect the handler
-		disruptor.handleEventsWith(handlerArray);
+		EventHandlerGroup<RingEvent> handlerGroup = disruptor.handleEventsWith(handlerArray);
+		//handlerGroup.then(handlers);
 	}
 
 	/**
