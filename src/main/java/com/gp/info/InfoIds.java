@@ -46,7 +46,7 @@ public class InfoIds {
 		public void serialize(InfoId arg0, JsonGenerator jsonGenerator, SerializerProvider arg2)
 				throws IOException, JsonProcessingException {
 			
-			String idType = arg0.getId().getClass().getName();
+			String idType = arg0.getId().getClass().getSimpleName();
 			jsonGenerator.writeString(idType + GeneralConstants.KEYS_SEPARATOR + arg0.toString());
 		}
 	}
@@ -65,7 +65,7 @@ public class InfoIds {
 			String type = fullStr.substring(0, idx);
 			InfoId<?> rtv = null;
 			try {
-				Class<?> clazz = Class.forName(type);
+				Class<?> clazz = Class.forName("java.lang." + type);
 				rtv = InfoIds.parseInfoId(fullStr.substring(idx + 1), clazz);
 			} catch (ClassNotFoundException e) {
 				
