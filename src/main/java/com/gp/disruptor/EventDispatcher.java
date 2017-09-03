@@ -185,14 +185,15 @@ public class EventDispatcher {
 		
 		// After take payload, it is removed from ring event instance.
 		EventType eventType = ringevent.getEventType();
+		EventHooker<?> eventHooker = null;
 		if(null == eventType) {
 			LOGGER.warn("EventType cannot be null");
+		}else {
+			eventHooker = hookers.get(eventType);
 		}
-		EventPayload payload = ringevent.takePayload();
-		EventHooker<?> eventHooker = hookers.get(eventType);
 
 		if (eventHooker != null) {
-
+			EventPayload payload = ringevent.takePayload();
 			try {
 
 				eventHooker.processPayload(payload);
@@ -209,7 +210,7 @@ public class EventDispatcher {
 
 		}else{
 			
-			LOGGER.warn("EventHooker not exist or unmatch type:{}", eventType);
+			LOGGER.warn("EventHooker with event:{} not exists.", eventType);
 		}
 
 	}

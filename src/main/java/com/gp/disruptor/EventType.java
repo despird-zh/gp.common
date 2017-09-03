@@ -3,6 +3,8 @@ package com.gp.disruptor;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+import com.gp.common.GeneralConstants;
+
 /**
  * The event type to identify payload and hooker
  **/
@@ -15,7 +17,7 @@ public class EventType {
 	/** index event type */
 	public static EventType CORE   = new EventType(12);
 	/** unknown event type */
-	public static EventType UNKNOWN = new EventType(13); 
+	public static EventType UNKNOWN = new EventType(-1); 
 	
 	private int type = -1;
 	
@@ -48,8 +50,22 @@ public class EventType {
 	
 	@Override
 	public String toString(){
+		String name = null;
 		
-		return "EventType:" + String.valueOf(type);
+		switch (this.type) {
+			case 10 : 
+				name = "AUDIT"; break;
+			case 11 : 
+				name = "SYNC"; break;
+			case 12 : 
+				name = "CORE"; break;
+			case -1 : 
+				name = "UNKNOWN"; break;
+			default : 
+				name = "UNKNOWN"; 
+		}
+		
+		return (name == null ? "" : name) + GeneralConstants.OPTS_SEPARATOR + String.valueOf(type);
 	}
 
 }
