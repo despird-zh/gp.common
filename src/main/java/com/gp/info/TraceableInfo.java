@@ -14,6 +14,7 @@ public class TraceableInfo<K> implements BaseInfo<K>{
 
 	private static final long serialVersionUID = 1L;
 
+	
 	private InfoId<K> infoId = null;
 		
 	private String modifier;

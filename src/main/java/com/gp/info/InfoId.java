@@ -21,10 +21,7 @@ public class InfoId <K> implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	/** table alias */
-	private String idKey;
-	
-	/** the id column*/
-	private String idColumn = "id";
+	private Identifier idKey;
 	
 	/** record id */
 	private K id;
@@ -32,43 +29,38 @@ public class InfoId <K> implements Serializable{
 	/**
 	 * constructor with table and id 
 	 **/
-	public InfoId(String idKey, K id){
+	public InfoId(Identifier idKey, K id){
 
 		if( !(id instanceof Long) && !(id instanceof Integer) && !(id instanceof String)) {
 			throw new IllegalArgumentException("the id must be Long/Integer/String");
 		}
+		if(!(idKey.getIdClass()).equals(id.getClass())) {
+			throw new IllegalArgumentException("the id must be Long/Integer/String");
+		}
+			
 		this.idKey = idKey;
 		this.id = id;
 	}
 	
 	/**
-	 * constructor with table name, id column and id value
-	 **/
-	public InfoId(String idKey,String idColumn, K id){
-		this(idKey, id);
-		this.idColumn = idColumn;
-		
-	}
-	
-	/**
 	 * constructor with Identifier and id 
 	 **/
-	public InfoId(Identifier idKey, K id){
+	//public InfoId(Identifier idKey, K id){
 
-		this(idKey.getSchema(), idKey.getIdColumn(), id);
-	}
+		//this(idKey.getSchema(),id);
+	//}
 	
 	/**
 	 * Get type 
 	 **/
-	public String getIdKey() {
+	public Identifier getIdKey() {
 		return idKey;
 	}
 
 	/**
 	 * Set type 
 	 **/
-	public void setIdKey(String idKey) {
+	public void setIdKey(Identifier idKey) {
 		this.idKey = idKey;
 	}
 
@@ -92,7 +84,7 @@ public class InfoId <K> implements Serializable{
 	@Override
 	public String toString(){
 		
-		return this.idKey + GeneralConstants.KEYS_SEPARATOR + this.getIdColumn() + GeneralConstants.KEYS_SEPARATOR + id.toString();
+		return this.idKey.getSchema() + GeneralConstants.KEYS_SEPARATOR + id.toString();
 	}
 	
 
@@ -100,14 +92,7 @@ public class InfoId <K> implements Serializable{
 	 * Get the column of id 
 	 **/
 	public String getIdColumn() {
-		return idColumn;
-	}
-	
-	/**
-	 * Set the column of id 
-	 **/
-	public void setIdColumn(String idColumn) {
-		this.idColumn = idColumn;
+		return idKey.getIdColumn();
 	}
 	
 	@Override
