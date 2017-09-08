@@ -2,7 +2,10 @@ package com.gp.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -18,7 +21,12 @@ public class CommonUtils {
 	private static Logger LOGGER = LoggerFactory.getLogger(CommonUtils.class);
 
 	public static ObjectMapper JSON_MAPPER = new ObjectMapper();
-
+	
+	static {
+		JSON_MAPPER.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+		JSON_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+	}
+	
 	public static boolean isNumeric(String str) {
 		Pattern pattern = Pattern.compile("-?[0-9]*");
 		Matcher isNum = pattern.matcher(str);
@@ -125,6 +133,7 @@ public class CommonUtils {
 		return new HashMap<String,T>();
 	}
 
+	
 	/**
 	 * Convert a Json Object String into Map
 	 **/
@@ -152,5 +161,20 @@ public class CommonUtils {
 			LOGGER.error("Fail convert Json string to List< Object> listJson", e);
 		}
 		return new ArrayList<T>();
+	}
+	
+	/**
+	 * Convert json object string into map
+	 **/
+	public static <T>  Map<String, T> toMap(Object bean, Class<T> T){
+		if(null == bean)
+			return new HashMap<String,T>();
+
+		try {
+			return JSON_MAPPER.convertValue(bean, new TypeReference<Map<String, T>>(){});
+		} catch ( Exception e) {
+			LOGGER.error("Fail convert Bean to Map<String, Object> propmap", e);
+		}
+		return new HashMap<String,T>();
 	}
 }
