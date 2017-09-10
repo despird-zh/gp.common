@@ -206,6 +206,7 @@ public class EventDispatcher {
 						if(LOGGER.isDebugEnabled()) {
 							LOGGER.debug("found chain payload: {}", chainPayload.getEventType());
 						}
+						// re-send the payload to ringbuffer.
 						this.sendPayload(chainPayload);
 					}
 				}
