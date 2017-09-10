@@ -35,7 +35,7 @@ public class EventPayload {
 	/**
 	 * Return the chain event payloads
 	 **/
-	public Collection<EventPayload> getChainEventPayloads(){
+	public Collection<EventPayload> getChainPayloads(){
 		
 		return chainPayloads;
 	}
@@ -44,11 +44,20 @@ public class EventPayload {
 	 * Add chain event payload into the collection
 	 * @param chainPayload the chain payload 
 	 **/
-	public void addChainEventPayload(EventPayload chainPayload) {
+	public void addChainPayload(EventPayload chainPayload) {
 		
 		if(chainPayloads == null) 
 			chainPayloads = new HashSet<EventPayload>();
 	
 		chainPayloads.add(chainPayload);
+	}
+	
+	/**
+	 * Reset the event's chain payloads 
+	 **/
+	public void resetChainPayloads() {
+		if(chainPayloads != null) {
+			chainPayloads.clear();
+		}
 	}
 }

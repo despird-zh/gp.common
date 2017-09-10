@@ -195,11 +195,17 @@ public class EventDispatcher {
 		if (eventHooker != null) {
 			EventPayload payload = ringevent.takePayload();
 			try {
-
+				// keep the payload with empty chains, avoid the dead-cycle.
+				payload.resetChainPayloads();
+				// process the event, the chain payload maybe added.
 				eventHooker.processPayload(payload);
-				Collection<EventPayload> chainPayloads = payload.getChainEventPayloads();
+				// check the chain payloads and re-send it to disruptor
+				Collection<EventPayload> chainPayloads = payload.getChainPayloads();
 				if(chainPayloads != null) {
 					for(EventPayload chainPayload:chainPayloads) {
+						if(LOGGER.isDebugEnabled()) {
+							LOGGER.debug("found chain payload: {}", chainPayload.getEventType());
+						}
 						this.sendPayload(chainPayload);
 					}
 				}
@@ -212,7 +218,6 @@ public class EventDispatcher {
 			
 			LOGGER.warn("EventHooker with event:{} not exists.", eventType);
 		}
-
 	}
 
 	/**
@@ -225,6 +230,7 @@ public class EventDispatcher {
 		
 		if(disruptor == null)
 			return ;
+		
 		RingBuffer<RingEvent> ringBuffer = disruptor.getRingBuffer();
 		long sequence = ringBuffer.next();  // Grab the next sequence
 	    try{
