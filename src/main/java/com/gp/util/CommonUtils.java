@@ -97,7 +97,7 @@ public class CommonUtils {
 	/**
 	 * Convert a Json Object String into Map
 	 **/
-	public static String toJson(Map<String, Object> propmap){
+	public static String toJson(Map<String, ?> propmap){
 		if(null == propmap)
 			return "{}";
 		try {
@@ -108,19 +108,6 @@ public class CommonUtils {
 		return StringUtils.EMPTY;
 	}
 
-	/**
-	 * Convert a Json Object String into Map
-	 **/
-	public static <T> String toJson(Map<String, T> propmap, Class<T> T){
-		if(null == propmap)
-			return "{}";
-		try {
-			return JSON_MAPPER.writeValueAsString(propmap);
-		} catch (JsonProcessingException e) {
-			LOGGER.error("Fail convert Map<String, Object> propmap to String", e);
-		}
-		return StringUtils.EMPTY;
-	}
 
 	/**
 	 * Convert json object string into map
