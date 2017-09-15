@@ -2,7 +2,7 @@ package com.gp.disruptor;
 
 import com.gp.exception.BaseException;
 import com.gp.launcher.CoreInitializer;
-import com.gp.launcher.LifecycleHooker;
+import com.gp.launcher.LifecycleListener;
 
 /**
  * The event initializer
@@ -21,7 +21,7 @@ public class EventEngineInitializer extends CoreInitializer{
 	}
 
 	@Override
-	public LifecycleHooker setupLifecycleHooker() throws BaseException {
+	public LifecycleListener setupLifecycleHooker() throws BaseException {
 		EventDispatcher instance = EventDispatcher.getInstance();
 		return instance.getLifecycleHooker();
 	}

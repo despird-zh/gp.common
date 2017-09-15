@@ -7,7 +7,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import com.gp.launcher.Lifecycle.LifeState;
 
-public abstract class LifecycleHooker {
+public abstract class LifecycleListener {
 
 	/** The ILifecycle launcher */
 	private Lifecycle launcher;
@@ -17,12 +17,12 @@ public abstract class LifecycleHooker {
 	/** the priority of hooker */
 	private int priority = 0;
 
-	public LifecycleHooker(int priority){
+	public LifecycleListener(int priority){
 		
 		this.priority = priority;
 	}
 	
-	public LifecycleHooker(String name, int priority){
+	public LifecycleListener(String name, int priority){
 		
 		this.name = name;
 		this.priority = priority;
@@ -104,11 +104,11 @@ public abstract class LifecycleHooker {
 			return true;
 		}
 		// step 2
-		if (!(other instanceof LifecycleHooker)) {
+		if (!(other instanceof LifecycleListener)) {
 			return false;
 		}
 		// step 3
-		LifecycleHooker that = (LifecycleHooker) other;
+		LifecycleListener that = (LifecycleListener) other;
 
 		return new EqualsBuilder()
 			.append(this.priority, that.priority)

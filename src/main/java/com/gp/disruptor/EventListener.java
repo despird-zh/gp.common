@@ -11,7 +11,7 @@ import com.lmax.disruptor.RingBuffer;
  * provide event producer that to be used for event publishing. 
  *  
  **/
-public abstract class EventHooker<T extends EventPayload> {
+public abstract class EventListener<T extends EventPayload> {
 
 	/** the event type */
 	private EventType eventType;
@@ -22,7 +22,7 @@ public abstract class EventHooker<T extends EventPayload> {
 	/**
 	 * Constructor:specify the eventype supported 
 	 **/
-	public EventHooker(EventType eventType){
+	public EventListener(EventType eventType){
 		
 		this.eventType = eventType;
 	}
@@ -83,11 +83,11 @@ public abstract class EventHooker<T extends EventPayload> {
 			return true;
 		}
 		// step 2
-		if (!(other instanceof EventHooker)) {
+		if (!(other instanceof EventListener)) {
 			return false;
 		}
 		// step 3
-		EventHooker<?> that = (EventHooker<?>) other;
+		EventListener<?> that = (EventListener<?>) other;
 		// step 4
 		return new EqualsBuilder()
 			.append(this.eventType, that.eventType).isEquals();

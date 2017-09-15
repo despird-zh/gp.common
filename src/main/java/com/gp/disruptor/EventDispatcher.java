@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.gp.exception.RingEventException;
-import com.gp.launcher.LifecycleHooker;
+import com.gp.launcher.LifecycleListener;
 import com.lmax.disruptor.EventFactory;
 import com.lmax.disruptor.EventHandler;
 import com.lmax.disruptor.RingBuffer;
@@ -44,11 +44,11 @@ public class EventDispatcher {
 	private Set<EventHandler<RingEvent>> handlers = new HashSet<EventHandler<RingEvent>>();
 	//(){ new RingEventHandler() }
 	/** the event hooker list */
-	private Map<EventType, EventHooker<?>> hookers = new HashMap<EventType, EventHooker<?>>();
+	private Map<EventType, EventListener<?>> hookers = new HashMap<EventType, EventListener<?>>();
 	/** single instance */
 	private static EventDispatcher instance;
 	/** the lifecycle hooker */
-	private LifecycleHooker hooker = null;
+	private LifecycleListener hooker = null;
 	/** running flag */
 	private boolean running = false;
 	/**
@@ -60,7 +60,7 @@ public class EventDispatcher {
 		handlers.add(new RingEventHandler());
 		
 		// define a lifecyle hooker.
-		hooker = new LifecycleHooker("EventDispatcher", LIFECYCLE_HOOKER_PRIORITY){
+		hooker = new LifecycleListener("EventDispatcher", LIFECYCLE_HOOKER_PRIORITY){
 
 			@Override
 			public void initial() {
@@ -129,7 +129,7 @@ public class EventDispatcher {
 	 * 
 	 *  @return LifecycleHooker
 	 **/
-	public LifecycleHooker getLifecycleHooker(){
+	public LifecycleListener getLifecycleHooker(){
 		return this.hooker;
 	}
 		
@@ -170,7 +170,7 @@ public class EventDispatcher {
 	 * 
 	 * @return EventHooker 
 	 **/
-	public EventHooker<?> getEventHooker(EventType eventType){
+	public EventListener<?> getEventHooker(EventType eventType){
 		
 		return hookers.get(eventType);
 	}
@@ -185,7 +185,7 @@ public class EventDispatcher {
 		
 		// After take payload, it is removed from ring event instance.
 		EventType eventType = ringevent.getEventType();
-		EventHooker<?> eventHooker = null;
+		EventListener<?> eventHooker = null;
 		if(null == eventType) {
 			LOGGER.warn("EventType cannot be null");
 		}else {
@@ -251,7 +251,7 @@ public class EventDispatcher {
 	 *  @param eventType the type of event
 	 **/
 	public EventProducer<?> getEventProducer(EventType eventType) throws RingEventException{
-		EventHooker<?> eventHooker = hookers.get(eventType);
+		EventListener<?> eventHooker = hookers.get(eventType);
 		if(eventHooker == null) return null;
 		
 		return eventHooker.getEventProducer();
@@ -262,7 +262,7 @@ public class EventDispatcher {
 	 * 
 	 * @param eventHooker the hooker of event 
 	 **/
-	public EventType regEventHooker(EventHooker<?> eventHooker) {
+	public EventType regEventHooker(EventListener<?> eventHooker) {
 
 		if(null == eventHooker.getEventType()){
 			
@@ -294,7 +294,7 @@ public class EventDispatcher {
 	 **/
 	public void unRegEventHooker(EventType eventType){
 		
-		EventHooker<?> eventHooker = hookers.remove(eventType);
+		EventListener<?> eventHooker = hookers.remove(eventType);
 		eventHooker.setRingBuffer(null);// clear reference to buffer.
 		
 	}

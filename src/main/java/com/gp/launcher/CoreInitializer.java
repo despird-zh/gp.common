@@ -10,7 +10,7 @@ import com.gp.exception.BaseException;
  **/
 public abstract class CoreInitializer {
 
-	LifecycleHooker hooker = null;
+	LifecycleListener hooker = null;
 	/**
 	 * Default constructor, here the hooker will be bind to CoreLauncher
 	 **/
@@ -25,12 +25,12 @@ public abstract class CoreInitializer {
 	 * 
 	 * @return LifecycleHooker lifecycle event listener
 	 **/
-	public abstract LifecycleHooker setupLifecycleHooker() throws BaseException;
+	public abstract LifecycleListener setupLifecycleHooker() throws BaseException;
 	
 	/**
 	 * Get the LifecycleHooker post default constructor and setup 
 	 **/
-	public LifecycleHooker getLifecycleHooker(){
+	public LifecycleListener getLifecycleHooker(){
 		
 		return this.hooker;
 	}

@@ -30,7 +30,7 @@ public abstract class Lifecycle {
 	/** reentrant lock */
 	private ReentrantLock lock = new ReentrantLock(); // lock
 	/** hooker list*/
-	private List<LifecycleHooker> hookers = new ArrayList<LifecycleHooker>();
+	private List<LifecycleListener> hookers = new ArrayList<LifecycleListener>();
 	
 	private List<LifeCycleMessage> messageList = new ArrayList<LifeCycleMessage>();
 	
@@ -47,7 +47,7 @@ public abstract class Lifecycle {
 	 * [{priority=25},{priority=25},{priority=10},{priority=5},{priority=2}]
 	 * 
 	 **/
-	public void regLifecycleHooker(LifecycleHooker hooker){
+	public void regLifecycleHooker(LifecycleListener hooker){
 		
 		lock.lock();
 		int count = hookers.size()-1;
@@ -80,7 +80,7 @@ public abstract class Lifecycle {
 	/**
 	 * Unregister the life cycle listener 
 	 **/
-	public void unregLifecycleHooker(LifecycleHooker hooker){
+	public void unregLifecycleHooker(LifecycleListener hooker){
 		lock.lock();
 		hookers.remove(hooker);
 		lock.unlock();
